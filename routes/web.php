@@ -16,3 +16,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/dashbord',function (){
+    return view('dashboard');
+})->middleware('auth');
+Route::get('/profile/edit',function (){
+    return view('profile.edit');
+})->middleware('auth');
+Route::get('/avatar',function (){
+   return view('profile/avatar');
+});
