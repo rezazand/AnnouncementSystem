@@ -93,7 +93,7 @@
     <a href="index3.html" class="brand-link">
         <img src="{{asset('dist/img/AdminLTELogo.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
              style="opacity: .8">
-        <span class="brand-text font-weight-light">پنل مدیریت</span>
+        <span class="brand-text font-weight-light">پنل کاربری</span>
     </a>
 
     <!-- Sidebar -->
@@ -128,7 +128,7 @@
                         <a href="#" class="nav-link">
                             <i class="nav-icon fa fa-envelope-o"></i>
                             <p>
-                                پیام ها
+                                نامه ها
                                 <i class="fa fa-angle-left right"></i>
                             </p>
                         </a>
@@ -136,7 +136,7 @@
                             <li class="nav-item">
                                 <a href="{{route('inbox')}}" class="nav-link" id="inbox">
                                     <i class="fa fa-circle-o nav-icon"></i>
-                                    <p>صندوق پیام</p>
+                                    <p>صندوق نامه</p>
                                 </a>
                             </li>
                             <li class="nav-item">

@@ -2,7 +2,7 @@
 @section('messages-content')
     <div class="card card-primary card-outline">
         <div class="card-header">
-            <h3 class="card-title">خواندن پیام</h3>
+            <h3 class="card-title">خواندن نامه</h3>
 
         </div>
         <!-- /.card-header -->

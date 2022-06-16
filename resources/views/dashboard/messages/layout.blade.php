@@ -1,6 +1,6 @@
 @extends('dashboard.layout')
 @section('title')
-    <title>پنل مدیریت | پیام ها</title>
+    <title>پنل کاربری | نامه ها</title>
 @endsection
 @section('content')
     <!-- Content Wrapper. Contains page content -->
@@ -10,12 +10,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>خواندن پیام</h1>
+                        <h1> مشاهده نامه ها</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{route('dashboard')}}">خانه</a></li>
-                            <li class="breadcrumb-item active">خواندن پیام</li>
+                            <li class="breadcrumb-item active">مشاهده نامه ها</li>
                         </ol>
                     </div>
                 </div>
@@ -31,7 +31,7 @@
                         <a href="{{route('inbox')}}" class="btn btn-primary btn-block mb-3">برگشت <i class="fa fa-share"></i></button>
                         </a>
                         @else
-                            <a href="{{route('write')}}" class="btn btn-primary btn-block mb-3">ایجاد پیام جدید <i class="fa fa-share"></i></button>
+                            <a href="{{route('write')}}" class="btn btn-primary btn-block mb-3">ایجاد نامه جدید <i class="fa fa-share"></i></button>
                             </a>
                         @endif
                         <div class="card">

@@ -6,7 +6,7 @@
 
             <div class="card-tools">
                 <div class="input-group input-group-sm">
-                    <input type="text" class="form-control" placeholder="جستجو پیام">
+                    <input type="text" class="form-control" placeholder="جستجو نامه">
                     <div class="input-group-append">
                         <div class="btn btn-primary">
                             <i class="fa fa-search"></i>
