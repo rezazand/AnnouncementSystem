@@ -19,13 +19,12 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique()->nullable();
             $table->integer('PNumber')->unique();
             $table->string('password');
-            $table->string('avatar')->default('default.jpg');
+            $table->integer('role_id')->unsigned();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      *
@@ -34,5 +33,7 @@ class CreateUsersTable extends Migration
     public function down()
     {
         Schema::dropIfExists('users');
+        Schema::dropIfExists('roles');
+
     }
 }

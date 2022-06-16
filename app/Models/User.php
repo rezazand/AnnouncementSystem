@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class User extends Authenticatable
+class User extends Authenticatable implements HasMedia
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable ,InteractsWithMedia;
 
     /**
      * The attributes that are mass assignable.
@@ -42,19 +44,20 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function messages()
+    public function messages($key)
     {
-        return $this->hasMany(Message::class);
+        return $this->hasMany(Message::class,$key);
     }
+
 
     public function replies()
     {
         return $this->hasMany(Reply::class);
     }
 
-    public function roles()
+    public function role()
     {
-        return $this->belongsToMany(Role::class);
+        return $this->belongsTo(Role::class);
     }
 
     public function hasRole($role)

@@ -6,7 +6,7 @@ use App\Models\Message;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ReplyFactory extends Factory
+class   ReplyFactory extends Factory
 {
     /**
      * Define the model's default state.

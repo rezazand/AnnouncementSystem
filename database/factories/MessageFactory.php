@@ -16,6 +16,7 @@ class MessageFactory extends Factory
     {
         return [
             'user_id'=>User::all()->random()->id,
+            'subject'=>$this->faker->title(),
             'body'=>$this->faker->text(),
             'to'=>User::all()->random()->id,
             'status'=>$this->faker->numberBetween(0,1),

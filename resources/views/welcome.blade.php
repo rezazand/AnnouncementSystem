@@ -26,7 +26,7 @@
                 <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
                     @auth
                         <a href="{{route('logout')}}" class="text-sm text-gray-700 dark:text-white underline" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Logout</a>
-                        <a href="{{ url('/home') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a>
+                        <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a>
                         <form id="logout-form" action="{{route('logout')}}" method="POST" style="display: none;">
                             @csrf
                         </form>

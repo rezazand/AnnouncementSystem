@@ -16,12 +16,18 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/dashbord',function (){
-    return view('dashboard');
-})->middleware('auth');
+Route::get('/dashboard',function (){
+    return view('dashboard.master');
+})->middleware('auth')->name('dashboard');
+Route::get('profile',function (){
+    return view('dashboard.profile.master');
+})->middleware('auth')->name('profile');
 Route::get('/profile/edit',function (){
-    return view('profile.edit');
+    return view('dashboard.profile.edit');
 })->middleware('auth');
-Route::get('/avatar',function (){
-   return view('profile/avatar');
-});
+Route::get('messages/inbox',[\App\Http\Controllers\MessageController::class,'inbox'])->name('inbox');
+Route::get('messages/inbox/{message}',[\App\Http\Controllers\MessageController::class,'read']);
+Route::get('messages/sent',[\App\Http\Controllers\MessageController::class,'sent'])->name('sent');
+Route::get('messages/write',[\App\Http\Controllers\MessageController::class,'write'])->name('write');
+Route::post('messages/create',[\App\Http\Controllers\MessageController::class,'create'])->name('create');
+

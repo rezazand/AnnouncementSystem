@@ -32,13 +32,8 @@ class CraeteRolesAndPermissionsTable extends Migration
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade')->onUpdate('cascade');
             $table->primary(['permission_id','role_id']);
         });
-        Schema::create('role_user', function (Blueprint $table) {
-            $table->integer('role_id')->unsigned();
-            $table->integer('user_id')->unsigned();
+        Schema::table('users', function (Blueprint $table) {
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->primary(['role_id','user_id']);
-
         });
     }
 
@@ -49,9 +44,8 @@ class CraeteRolesAndPermissionsTable extends Migration
      */
     public function down()
     {
+
         Schema::dropIfExists('permission_role');
-        Schema::dropIfExists('role_user');
-        Schema::dropIfExists('roles');
         Schema::dropIfExists('permissions');
     }
 }

@@ -27,28 +27,22 @@
     <div class="lockscreen-logo">
         <a class="mr-5" href="../../index2.html"><b>پروفایل کاربری</b></a>
     </div>
-    <!-- START LOCK SCREEN ITEM -->
-    <div class="lockscreen-item">
-        <!-- lockscreen image -->
-        <div class="lockscreen-image">
-            <img src="../../dist/img/user1-128x128.jpg" alt="User Image">
-        </div>
-        <!-- /.lockscreen-image -->
 
-        <!-- lockscreen credentials (contains the form) -->
-        <form class="lockscreen-credentials ">
-            <div
-                class="text-center pt-2 pb-1 font-weight-bold">{{auth()->user()->name}} {{auth()->user()->lastname}}</div>
-        </form>
-        <!-- /.lockscreen credentials -->
-    </div>
     <div class="login-box">
         <!-- /.login-logo -->
-        <div class="card">
-            <div class="card-body login-card-body">
-                <form action="{{route('user-profile-information.update')}}" method="post">
-                    @csrf
-                    @method('PUT')
+        <form action="{{route('user-profile-information.update')}}" method="post" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
+        <!-- START LOCK SCREEN ITEM -->
+            <div class="lockscreen-item">
+                <label class="lockscreen-image" for="file-input">
+                    <img src="{{auth()->user()->getMedia()->last()? auth()->user()->getMedia()->last()->getUrl():'/avatar.png'}}" alt="User Image">
+                </label >
+                <input id="file-input" type="file" name="avatar" style="display: none;">
+                <div class="lockscreen-credentials text-center pt-2 pb-1 font-weight-bold">{{auth()->user()->name}} {{auth()->user()->lastname}}</div>
+            </div>
+            <div class="card">
+                <div class="card-body login-card-body">
                     <div class="input-group mb-3">
                         <input name="name" type="text" class="form-control" placeholder="نام"
                                value="{{old() ? old():auth()->user()->name}}">
@@ -74,10 +68,11 @@
                         </div>
                         <!-- /.col -->
                     </div>
-                </form>
+                </div>
+                <!-- /.login-card-body -->
             </div>
-            <!-- /.login-card-body -->
-        </div>
+        </form>
+
     </div>
 
 </div>
