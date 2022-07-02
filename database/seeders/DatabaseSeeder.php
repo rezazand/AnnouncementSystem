@@ -2,11 +2,14 @@
 
 namespace Database\Seeders;
 
+use App\Models\Department;
 use App\Models\Message;
 use App\Models\Reply;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,9 +20,70 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Role::factory(3)->create();
-         User::factory(10)->create();
-         Message::factory(100)->create();
-         Reply::factory(123)->create();
+        DB::table('permissions')->insert([
+            'name' => 'create-user',
+            'label' => 'ایجاد کاربر'
+        ]);
+        DB::table('permissions')->insert([
+            'name' => 'delete-user',
+            'label' => 'حذف کاربر'
+        ]);
+        DB::table('permissions')->insert([
+            'name' => 'edit-user',
+            'label' => 'ویرایش کاربر'
+        ]);
+        DB::table('permissions')->insert([
+            'name' => 'create-department',
+            'label' => 'ایجاد زیرمجموعه'
+        ]);
+        DB::table('permissions')->insert([
+            'name' => 'delete-department',
+            'label' => 'حذف زیرمجموعه'
+        ]);
+        DB::table('permissions')->insert([
+            'name' => 'edit-department',
+            'label' => 'ویرایش زیرمجموعه'
+        ]);
+        DB::table('permissions')->insert([
+            'name' => 'create-role',
+            'label' => 'ایجاد وظیفه'
+        ]);
+        DB::table('permissions')->insert([
+            'name' => 'edit-role',
+            'label' => 'ویرایش وظیفه'
+        ]);
+        DB::table('permissions')->insert([
+            'name' => 'delete-role',
+            'label' => 'حذف وظیفه'
+        ]);
+        DB::table('roles')->insert([
+            'label'=>'مدیر'
+        ]);
+        DB::table('departments')->insert([
+            'label'=>'فناوری'
+        ]);
+        DB::table('departments')->insert([
+            'label'=>'حراست'
+        ]);
+        DB::table('departments')->insert([
+            'label'=>'مدیریت'
+        ]);
+        DB::table('departments')->insert([
+            'label'=>'حسابداری'
+        ]);
+        DB::table('users')->insert([
+            'name'=>'admin',
+            'email'=>'admin@gmail.com',
+            'password'=>bcrypt('admin'),
+            'role_id'=>1,
+            'remember_token' => Str::random(10),
+            'email_verified_at' => now(),
+            'PNumber' => rand(9000000,1000000),
+            'department_id'=>1,
+        ]);
+        User::factory(32)->create();
+
+        Message::factory(100)->create();
+        Reply::factory(150)->create();
     }
 }

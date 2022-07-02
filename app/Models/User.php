@@ -12,7 +12,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 
 class User extends Authenticatable implements HasMedia
 {
-    use HasApiTokens, HasFactory, Notifiable ,InteractsWithMedia;
+    use HasApiTokens, HasFactory, Notifiable, InteractsWithMedia;
 
     /**
      * The attributes that are mass assignable.
@@ -46,7 +46,7 @@ class User extends Authenticatable implements HasMedia
 
     public function messages($key)
     {
-        return $this->hasMany(Message::class,$key);
+        return $this->hasMany(Message::class, $key);
     }
 
 
@@ -60,9 +60,13 @@ class User extends Authenticatable implements HasMedia
         return $this->belongsTo(Role::class);
     }
 
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
+
     public function hasRole($role)
     {
-        return !! $role->intersect($this->roles)->count();
-
+        return !!$role->intersect($this->roles)->count();
     }
 }

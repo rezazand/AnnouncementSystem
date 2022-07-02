@@ -3,17 +3,6 @@
     <div class="card card-primary card-outline">
         <div class="card-header">
             <h3 class="card-title">{{\Route::currentRouteName() =='inbox'? 'دریافت شده':'ارسال شده'}}</h3>
-
-            <div class="card-tools">
-                <div class="input-group input-group-sm">
-                    <input type="text" class="form-control" placeholder="جستجو نامه">
-                    <div class="input-group-append">
-                        <div class="btn btn-primary">
-                            <i class="fa fa-search"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <!-- /.card-tools -->
         </div>
         <!-- /.card-header -->
@@ -34,31 +23,41 @@
                 <!-- /.btn-group -->
                 <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i>
                 </button>
+
                 <div class="float-left">
-                    1-50/200
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-default btn-sm"><i
-                                class="fa fa-chevron-right"></i></button>
-                        <button type="button" class="btn btn-default btn-sm"><i
-                                class="fa fa-chevron-left"></i></button>
-                    </div>
-                    <!-- /.btn-group -->
+                    {{$messages->links('paginate')}}
                 </div>
                 <!-- /.float-right -->
             </div>
             <div class="table-responsive mailbox-messages">
-                <table class="table table-hover hover">
+                <table class="table table-hover hover text-center text-sm">
                     <tbody>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        @if(\Route::currentRouteName() =='inbox')
+                            <th>فرستنده</th>
+                        @else
+                            <th>گیرنده</th>
+                        @endif
+                        <th>عنوان ابلاغیه</th>
+                        <th>تاریخ</th>
+                        <th>گردش کار</th>
+                    </tr>
                     @foreach($messages as $message)
-                        <tr class="{{$message->status ? 'text-bold':''}}">
-                            <td><input  type="checkbox"></td>
+                        <tr @if(\Route::currentRouteName() =='inbox' and $message->status) class="text-bold" @endif>
+                            <td><input type="checkbox"></td>
                             <td class="mailbox-star"><a href="#"><i
                                         class="fa fa-star-o text-warning"></i></a></td>
-                            <td class="mailbox-name"><a href="{{route('inbox').'/'."$message->id"}}">{{\Route::currentRouteName() =='inbox'?\App\Models\User::find($message->user_id)->name:\App\Models\User::find($message->to)->name}}</a></td>
-{{--                            {{Route::currentRouteName() == 'receives'? \App\Models\User::find($message->user_id)->name:\App\Models\User::find($message->to)->name}}--}}
-                            <td class="mailbox-subject">{{$message->subject}}</td>
-                            <td class="mailbox-attachment"></td>
-                            <td class="mailbox-date">5 دقیقه قبل</td>
+                            <td class="mailbox-name">{{\Route::currentRouteName() =='inbox'?\App\Models\User::find($message->user_id)->name:\App\Models\User::find($message->to)->name}}
+                                @if(\Route::currentRouteName() =='inbox' and $message->status) <span
+                                    class="badge badge-pill badge-warning py-1">جدید</span>@endif</td>
+                            <td class="mailbox-subject"><a
+                                    href="{{route('inbox').'/'."$message->id"}}">{{substr($message->subject,0,60)}}@if(strlen($message->subject) >60)
+                                        ...@endif</a></td>
+                            <td class="mailbox-date">{{$message->created_at}}</td>
+                            <td class="mailbox-date"><a href="{{route('workflow',"$message->id")}}"><i
+                                        class="fa fa-eye"></i></a></td>
                         </tr>
                     @endforeach
                     </tbody>
@@ -70,32 +69,9 @@
         <!-- /.card-body -->
         <div class="card-footer p-0">
             <div class="mailbox-controls">
-                <!-- Check all button -->
-                <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i
-                        class="fa fa-square-o"></i>
-                </button>
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default btn-sm"><i
-                            class="fa fa-trash-o"></i></button>
-                    <button type="button" class="btn btn-default btn-sm"><i class="fa fa-reply"></i>
-                    </button>
-                    <button type="button" class="btn btn-default btn-sm"><i class="fa fa-share"></i>
-                    </button>
-                </div>
-                <!-- /.btn-group -->
-                <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i>
-                </button>
                 <div class="float-left">
-                    1-50/200
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-default btn-sm"><i
-                                class="fa fa-chevron-left"></i></button>
-                        <button type="button" class="btn btn-default btn-sm"><i
-                                class="fa fa-chevron-right"></i></button>
-                    </div>
-                    <!-- /.btn-group -->
+                    {{$messages->links('paginate')}}
                 </div>
-                <!-- /.float-right -->
             </div>
         </div>
     </div>

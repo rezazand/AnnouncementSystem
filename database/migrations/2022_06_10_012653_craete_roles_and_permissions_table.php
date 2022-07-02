@@ -15,8 +15,7 @@ class CraeteRolesAndPermissionsTable extends Migration
     {
         Schema::create('roles', function (Blueprint $table) {
             $table->increments('id', true);
-            $table->string('name');
-            $table->string('label')->nullable();
+            $table->string('label');
             $table->timestamps();
         });
         Schema::create('permissions', function (Blueprint $table) {

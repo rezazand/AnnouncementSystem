@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    @yield('title')
+    @yield('head')
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Font Awesome -->
@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="{{asset('dist/css/bootstrap-rtl.min.css')}}">
     <!-- template rtl version -->
     <link rel="stylesheet" href="{{asset('dist/css/custom-style.css')}}">
-
+    @livewireStyles
 </head>
 <body class="hold-transition sidebar-mini">
 <!-- ./wrapper -->
@@ -50,7 +50,7 @@
         <li class="nav-item dropdown">
             <a title="اطلاعیه ها" class="nav-link" data-toggle="dropdown" href="#">
                 <i class="fa fa-bell-o"></i>
-                <span class="badge badge-warning navbar-badge">15</span>
+                <span class="badge badge-warning navbar-badge">{{auth()->user()->messages('to')->where('status',1)->count()}}</span>
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-left">
                 <span class="dropdown-item dropdown-header">15 نوتیفیکیشن</span>
@@ -59,18 +59,14 @@
                     <i class="fa fa-envelope ml-2"></i> 4 پیام جدید
                     <span class="float-left text-muted text-sm">3 دقیقه</span>
                 </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                    <i class="fa fa-users ml-2"></i> 8 درخواست دوستی
-                    <span class="float-left text-muted text-sm">12 ساعت</span>
-                </a>
+
                 <div class="dropdown-divider"></div>
                 <a href="#" class="dropdown-item">
                     <i class="fa fa-file ml-2"></i> 3 گزارش جدید
                     <span class="float-left text-muted text-sm">2 روز</span>
                 </a>
                 <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item dropdown-footer">مشاهده همه نوتیفیکیشن</a>
+                <a href="{{route('inbox')}}" class="dropdown-item dropdown-footer">مشاهده همه نوتیفیکیشن</a>
             </div>
         </li>
         {{--            <li class="nav-item">--}}
@@ -90,11 +86,11 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <p class="brand-link">
         <img src="{{asset('dist/img/AdminLTELogo.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
              style="opacity: .8">
         <span class="brand-text font-weight-light">پنل کاربری</span>
-    </a>
+    </p>
 
     <!-- Sidebar -->
     <div class="sidebar" style="direction: ltr">
@@ -128,7 +124,7 @@
                         <a href="#" class="nav-link">
                             <i class="nav-icon fa fa-envelope-o"></i>
                             <p>
-                                نامه ها
+                                مکاتبات
                                 <i class="fa fa-angle-left right"></i>
                             </p>
                         </a>
@@ -136,7 +132,7 @@
                             <li class="nav-item">
                                 <a href="{{route('inbox')}}" class="nav-link" id="inbox">
                                     <i class="fa fa-circle-o nav-icon"></i>
-                                    <p>صندوق نامه</p>
+                                    <p>صندوق</p>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -147,30 +143,14 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item has-treeview" id="manage">
-                        <a href="#" class="nav-link">
+                    <li class="nav-item" id="manage">
+                        <a href="{{route('manage')}}" class="nav-link" id="calender">
                             <i class="nav-icon fa fa-superpowers" aria-hidden="true"></i>
                             <p>
                                 مدیریت
-                                <i class="fa fa-angle-left right"></i>
                             </p>
                         </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="#" class="nav-link" id="create">
-                                    <i class="fa fa-circle-o nav-icon"></i>
-                                    <p>ایجاد</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link" id="edit">
-                                    <i class="fa fa-circle-o nav-icon"></i>
-                                    <p>ویرایش</p>
-                                </a>
-                            </li>
-                        </ul>
                     </li>
-
                     <li class="nav-item">
                         <a href="#" class="nav-link" id="calender">
                             <i class="nav-icon fa fa-calendar"></i>
@@ -189,6 +169,10 @@
 </aside>
 
 @yield('content')
+<footer class="main-footer">
+    <strong>CopyRight &copy; 2022 <a href="https://iut.ac.ir">دانشگاه صنعتی اصفهان</a>.</strong>
+</footer>
+@livewireScripts
 <!-- jQuery -->
 <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
 <!-- jQuery UI 1.11.4 -->
@@ -226,6 +210,24 @@
 <script src="{{asset('dist/js/pages/dashboard.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('dist/js/demo.js')}}"></script>
+<script !src="">
+    const processChange = debounce(()=>invokeModal(modalName));
+
+
+    function debounce(func, timeout = 400) {
+        let timer;
+        return (...args) => {
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                func.apply(this, args);
+            }, timeout);
+        };
+    }
+
+    function invokeModal(name) {
+        $(`#${name}`).modal('show');
+    }
+</script>
 @yield('js')
 </body>
 </html>

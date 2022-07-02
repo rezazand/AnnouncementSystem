@@ -1,6 +1,7 @@
 @extends('dashboard.layout')
-@section('title')
-    <title>پنل کاربری | نامه ها</title>
+@section('head')
+    <title>پنل کاربری | ابلاغیه ها</title>
+    @yield('head')
 @endsection
 @section('content')
     <!-- Content Wrapper. Contains page content -->
@@ -10,12 +11,29 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1> مشاهده نامه ها</h1>
+                        <h1> مشاهده ابلاغیه ها</h1>
                     </div>
                     <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('dashboard')}}">خانه</a></li>
-                            <li class="breadcrumb-item active">مشاهده نامه ها</li>
+                        <ol class="breadcrumb ">
+                            <li class="breadcrumb-item "><a href="{{route('dashboard')}}">خانه</a></li>
+                            @if(Route::currentRouteName() =='inbox')
+                                <li class="breadcrumb-item active">صندوق</li>
+                                <li class="breadcrumb-item active">دریافت شده</li>
+                            @elseif(Route::currentRouteName() =='sent')
+                                <li class="breadcrumb-item active">صندوق</li>
+                                <li class="breadcrumb-item active">ارسال شده</li>
+
+                            @elseif(Route::currentRouteName() =='read')
+                                <li class="breadcrumb-item active"><a href="{{route('inbox')}}">صندوق</a></li>
+                                <li class="breadcrumb-item active">خواندن</li>
+                            @elseif(Route::currentRouteName() == 'write')
+                                <li class="breadcrumb-item active"><a href="{{route('inbox')}}">صندوق</a></li>
+                                <li class="breadcrumb-item active">ایجاد ابلاغیه</li>
+                            @else
+                                <li class="breadcrumb-item active"><a href="{{route('inbox')}}">صندوق</a></li>
+                                <li class="breadcrumb-item active">گردش کار</li>
+                            @endif
+
                         </ol>
                     </div>
                 </div>
@@ -28,10 +46,11 @@
                 <div class="row">
                     <div class="col-md-3">
                         @if(\Route::currentRouteName() !=('inbox' or 'sent'))
-                        <a href="{{route('inbox')}}" class="btn btn-primary btn-block mb-3">برگشت <i class="fa fa-share"></i></button>
-                        </a>
+                            <a href="{{route('inbox')}}" class="btn btn-primary btn-block mb-3">برگشت <i
+                                    class="fa fa-share"></i></button>
+                            </a>
                         @else
-                            <a href="{{route('write')}}" class="btn btn-primary btn-block mb-3">ایجاد نامه جدید <i class="fa fa-share"></i></button>
+                            <a href="{{route('write')}}" class="btn btn-primary btn-block mb-3">ایجاد ابلاغیه جدید
                             </a>
                         @endif
                         <div class="card">
@@ -49,9 +68,7 @@
                                     <li class="nav-item active">
                                         <a href="{{route('inbox')}}" class="nav-link">
                                             <i class="fa fa-inbox"></i> دریافت شده
-                                            @if($unread!= 0)
-                                            <span class="badge bg-primary float-left">{{$unread}}</span>
-                                            @endif
+                                                <span class="badge bg-primary float-left">{{auth()->user()->messages('to')->where('status',1)->count()}}</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
@@ -59,22 +76,22 @@
                                             <i class="fa fa-envelope-o"></i> ارسال شده
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            <i class="fa fa-file-text-o"></i> پیش نویس
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            <i class="fa fa-trash-o"></i> سطل زباله
-                                        </a>
-                                    </li>
+{{--                                    <li class="nav-item">--}}
+{{--                                        <a href="#" class="nav-link">--}}
+{{--                                            <i class="fa fa-file-text-o"></i> پیش نویس--}}
+{{--                                        </a>--}}
+{{--                                    </li>--}}
+{{--                                    <li class="nav-item">--}}
+{{--                                        <a href="#" class="nav-link">--}}
+{{--                                            <i class="fa fa-trash-o"></i> سطل زباله--}}
+{{--                                        </a>--}}
+{{--                                    </li>--}}
                                 </ul>
                             </div>
                             <!-- /.card-body -->
                         </div>
                         <!-- /. box -->
-                        <div class="card">
+                        {{--<div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">برچسبب‌ها</h3>
 
@@ -106,7 +123,7 @@
                                 </ul>
                             </div>
                             <!-- /.card-body -->
-                        </div>
+                        </div>--}}
                         <!-- /.card -->
                     </div>
                     <!-- /.col -->
@@ -121,11 +138,6 @@
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
-    <footer class="main-footer">
-        <strong>CopyLeft &copy; 2018 <a href="http://github.com/hesammousavi/">حسام موسوی</a>.</strong>
-    </footer>
-    <!-- Control Sidebar -->
-    <!-- /.control-sidebar -->
 @endsection
 @section('js')
     @yield('js')

@@ -17,6 +17,7 @@ class CreateRepliesTable extends Migration
             $table->increments('id', true);
             $table->integer('message_id')->unsigned();
             $table->integer('user_id')->unsigned();
+            $table->text('subject');
             $table->text('body');
             $table->string('attachments')->nullable();
             $table->integer('to')->unsigned();

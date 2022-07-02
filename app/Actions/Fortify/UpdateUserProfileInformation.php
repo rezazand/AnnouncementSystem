@@ -29,17 +29,18 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 Rule::unique('users')->ignore($user->id),
             ],
         ])->validateWithBag('updateProfileInformation');
-
-        if ($input['email'] !== $user->email &&
-            $user instanceof MustVerifyEmail) {
-            $this->updateVerifiedUser($user, $input);
-        } else {
-            if (array_key_exists('avatar',$input) and is_null($user->getFirstMedia())){
+        if (array_key_exists('avatar',$input)){
+            if (is_null($user->getFirstMedia())){
                 $user->addMedia($input['avatar'])->toMediaCollection();
             }else{
                 $user->getFirstMedia()->delete();
                 $user->addMedia($input['avatar'])->toMediaCollection();
             }
+        }
+
+        if ($input['email'] !== $user->email) {
+            $this->updateVerifiedUser($user, $input);
+        } else {
             $user->forceFill([
                 'name' => $input['name'],
                 'email' => $input['email'],

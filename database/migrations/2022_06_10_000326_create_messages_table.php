@@ -19,7 +19,6 @@ class CreateMessagesTable extends Migration
             $table->string('subject');
             $table->text("body");
             $table->integer('to')->unsigned();
-            $table->string('attachments')->nullable();
             $table->integer('status')->default(0);
             $table->timestamps();
         });
