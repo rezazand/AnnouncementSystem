@@ -14,16 +14,15 @@ class CreateMessagesTable extends Migration
     public function up()
     {
         Schema::create('messages', function (Blueprint $table) {
-            $table->increments('id', true);
-            $table->integer('user_id')->unsigned();
+            $table->id('id', true);
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('subject');
             $table->text("body");
-            $table->integer('to')->unsigned();
+            $table->unsignedBigInteger('to');
             $table->integer('status')->default(0);
             $table->timestamps();
         });
         Schema::table('messages',function (Blueprint $table){
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('to')->references('id')->on('users')->onDelete('cascade');
         });
     }

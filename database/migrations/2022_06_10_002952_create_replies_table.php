@@ -14,19 +14,15 @@ class CreateRepliesTable extends Migration
     public function up()
     {
         Schema::create('replies', function (Blueprint $table) {
-            $table->increments('id', true);
-            $table->integer('message_id')->unsigned();
-            $table->integer('user_id')->unsigned();
+            $table->id('id', true);
+            $table->foreignId('message_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->text('subject');
             $table->text('body');
             $table->string('attachments')->nullable();
             $table->integer('to')->unsigned();
             $table->integer('status');
             $table->timestamps();
-        });
-        Schema::table('replies',function (Blueprint $table){
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('message_id')->references('id')->on('messages')->onDelete('cascade');
         });
     }
 

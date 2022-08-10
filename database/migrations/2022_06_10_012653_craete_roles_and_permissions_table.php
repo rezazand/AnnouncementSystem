@@ -14,25 +14,23 @@ class CraeteRolesAndPermissionsTable extends Migration
     public function up()
     {
         Schema::create('roles', function (Blueprint $table) {
-            $table->increments('id', true);
+            $table->id('id', true);
             $table->string('label');
             $table->timestamps();
         });
         Schema::create('permissions', function (Blueprint $table) {
-            $table->increments('id', true);
+            $table->id('id', true);
             $table->string('name');
             $table->string('label')->nullable();
             $table->timestamps();
         });
         Schema::create('permission_role', function (Blueprint $table) {
-            $table->integer('permission_id')->unsigned();
-            $table->integer('role_id')->unsigned();
-            $table->foreign('permission_id')->references('id')->on('permissions')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('permission_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('role_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->primary(['permission_id','role_id']);
         });
         Schema::table('users', function (Blueprint $table) {
-            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('role_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
 
