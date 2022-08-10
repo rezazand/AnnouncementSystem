@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Department;
 use App\Models\Message;
+use App\Models\Permission;
 use App\Models\Reply;
 use App\Models\Role;
 use App\Models\User;
@@ -20,6 +21,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('permissions')->insert([
+            'name' => 'admin',
+            'label' => 'مدیریت'
+        ]);
         DB::table('permissions')->insert([
             'name' => 'create-user',
             'label' => 'ایجاد کاربر'
@@ -56,6 +61,10 @@ class DatabaseSeeder extends Seeder
             'name' => 'delete-role',
             'label' => 'حذف وظیفه'
         ]);
+
+       $role = Role::factory()->create(['label'=>'مدیر سایت']);
+
+       $role->permissions()->sync(Permission::all());
         DB::table('roles')->insert([
             'label'=>'مدیر'
         ]);
@@ -71,6 +80,7 @@ class DatabaseSeeder extends Seeder
         DB::table('departments')->insert([
             'label'=>'حسابداری'
         ]);
+
         DB::table('users')->insert([
             'name'=>'admin',
             'email'=>'admin@gmail.com',
