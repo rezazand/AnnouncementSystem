@@ -30,7 +30,7 @@
     </div>
 
     <!-- Modal edit user -->
-    @if($user and $departments)
+    @if($userE and $departments)
     <div style="z-index: 9999!important;" class="modal fade " id="editUser" tabindex="-1" role="dialog"
          aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
