@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use phpDocumentor\Reflection\Types\Boolean;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -65,8 +66,8 @@ class User extends Authenticatable implements HasMedia
         return $this->belongsTo(Department::class);
     }
 
-    public function hasRole($role)
+    public function hasRole($role):Boolean
     {
-        return !!$role->intersect($this->roles)->count();
+        return !!$role->find($this->role->id);
     }
 }
