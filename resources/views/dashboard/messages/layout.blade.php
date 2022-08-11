@@ -44,6 +44,10 @@
         <section class="content">
             <div class="container-fluid">
                 <div class="row">
+                    <div class="col-md-9">
+                        @yield('messages-content')
+                    </div>
+                    <!-- /.col -->
                     <div class="col-md-3">
                         @if(\Route::currentRouteName() !=('inbox' or 'sent'))
                             <a href="{{route('inbox')}}" class="btn btn-primary btn-block mb-3">برگشت <i
@@ -68,7 +72,7 @@
                                     <li class="nav-item active">
                                         <a href="{{route('inbox')}}" class="nav-link">
                                             <i class="fa fa-inbox"></i> دریافت شده
-                                                <span class="badge bg-primary float-left">{{auth()->user()->messages('to')->where('status',1)->count()}}</span>
+                                            <span class="badge bg-primary float-left">{{auth()->user()->messages('to')->where('status',1)->count()}}</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
@@ -76,16 +80,16 @@
                                             <i class="fa fa-envelope-o"></i> ارسال شده
                                         </a>
                                     </li>
-{{--                                    <li class="nav-item">--}}
-{{--                                        <a href="#" class="nav-link">--}}
-{{--                                            <i class="fa fa-file-text-o"></i> پیش نویس--}}
-{{--                                        </a>--}}
-{{--                                    </li>--}}
-{{--                                    <li class="nav-item">--}}
-{{--                                        <a href="#" class="nav-link">--}}
-{{--                                            <i class="fa fa-trash-o"></i> سطل زباله--}}
-{{--                                        </a>--}}
-{{--                                    </li>--}}
+                                    {{--                                    <li class="nav-item">--}}
+                                    {{--                                        <a href="#" class="nav-link">--}}
+                                    {{--                                            <i class="fa fa-file-text-o"></i> پیش نویس--}}
+                                    {{--                                        </a>--}}
+                                    {{--                                    </li>--}}
+                                    {{--                                    <li class="nav-item">--}}
+                                    {{--                                        <a href="#" class="nav-link">--}}
+                                    {{--                                            <i class="fa fa-trash-o"></i> سطل زباله--}}
+                                    {{--                                        </a>--}}
+                                    {{--                                    </li>--}}
                                 </ul>
                             </div>
                             <!-- /.card-body -->
@@ -125,10 +129,6 @@
                             <!-- /.card-body -->
                         </div>--}}
                         <!-- /.card -->
-                    </div>
-                    <!-- /.col -->
-                    <div class="col-md-9">
-                        @yield('messages-content')
                     </div>
                     <!-- /.col -->
                 </div>
