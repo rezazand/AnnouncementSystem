@@ -66,7 +66,7 @@ class User extends Authenticatable implements HasMedia
         return $this->belongsTo(Department::class);
     }
 
-    public function hasRole($role):Boolean
+    public function hasRole($role):bool
     {
         return !!$role->find($this->role->id);
     }

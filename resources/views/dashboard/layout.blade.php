@@ -50,7 +50,8 @@
         <li class="nav-item dropdown">
             <a title="اطلاعیه ها" class="nav-link" data-toggle="dropdown" href="#">
                 <i class="fa fa-bell-o"></i>
-                <span class="badge badge-warning navbar-badge">{{auth()->user()->messages('to')->where('status',1)->count()}}</span>
+                <span
+                    class="badge badge-warning navbar-badge">{{auth()->user()->messages('to')->where('status',1)->count()}}</span>
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-left">
                 <span class="dropdown-item dropdown-header">15 نوتیفیکیشن</span>
@@ -69,13 +70,10 @@
                 <a href="{{route('inbox')}}" class="dropdown-item dropdown-footer">مشاهده همه نوتیفیکیشن</a>
             </div>
         </li>
-        {{--            <li class="nav-item">--}}
-        {{--                <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#"><i--}}
-        {{--                        class="fa fa-sign-out"></i></a>--}}
 
-        {{--            </li>--}}
         <li class="nav-item">
-            <a title="خروج از سایت" class="nav-link" href="{{route('logout')}}" onclick="event.preventDefault();document.getElementById('signout-form').submit();"><i
+            <a title="خروج از سایت" class="nav-link" href="{{route('logout')}}"
+               onclick="event.preventDefault();document.getElementById('signout-form').submit();"><i
                     class="fa fa-sign-out"></i></a>
         </li>
         <form id="signout-form" action="{{route('logout')}}" method="post" style="display: none;">@csrf</form>
@@ -98,8 +96,9 @@
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="image">
-                    <img src="{{auth()->user()->getFirstMediaUrl()? auth()->user()->getFirstMediaUrl():asset('avatar.png')}}"
-                         class="img-circle elevation-2" style="width: 35px;height: 35px;" alt="User Image">
+                    <img
+                        src="{{auth()->user()->getFirstMediaUrl()? auth()->user()->getFirstMediaUrl():asset('avatar.png')}}"
+                        class="img-circle elevation-2" style="width: 35px;height: 35px;" alt="User Image">
                 </div>
                 <div class="info">
                     <a href="{{route('profile')}}" class="d-block">{{auth()->user()->name}}</a>
@@ -128,7 +127,7 @@
                                 <i class="fa fa-angle-left right"></i>
                             </p>
                         </a>
-                        <ul class="nav nav-treeview" >
+                        <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a href="{{route('inbox')}}" class="nav-link" id="inbox">
                                     <i class="fa fa-circle-o nav-icon"></i>
@@ -143,14 +142,16 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item" id="manage">
-                        <a href="{{route('manage')}}" class="nav-link" id="calender">
-                            <i class="nav-icon fa fa-superpowers" aria-hidden="true"></i>
-                            <p>
-                                مدیریت
-                            </p>
-                        </a>
-                    </li>
+                    @can('admin')
+                        <li class="nav-item" id="manage">
+                            <a href="{{route('manage')}}" class="nav-link" id="calender">
+                                <i class="nav-icon fa fa-superpowers" aria-hidden="true"></i>
+                                <p>
+                                    مدیریت
+                                </p>
+                            </a>
+                        </li>
+                    @endcan
                     <li class="nav-item">
                         <a href="#" class="nav-link" id="calender">
                             <i class="nav-icon fa fa-calendar"></i>
@@ -211,10 +212,10 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('dist/js/demo.js')}}"></script>
 <script !src="">
-    const processChange = debounce(()=>invokeModal(modalName));
+    const processChange = debounce(() => invokeModal(modalName));
 
 
-    function debounce(func, timeout = 400) {
+    function debounce(func, timeout = 600) {
         let timer;
         return (...args) => {
             clearTimeout(timer);

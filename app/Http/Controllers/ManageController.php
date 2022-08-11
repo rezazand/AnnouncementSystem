@@ -113,7 +113,7 @@ class ManageController extends Controller
         Validator::make($input->all(), [
             'id' => ['required', 'integer'],
             'label' => ['required', 'string'],
-            'permissions' => ['required', 'array']
+            'permissions' => ['array']
         ])->validateWithBag('manageError');
 
         $role = Role::find($input->id);

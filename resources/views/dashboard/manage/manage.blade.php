@@ -2,6 +2,9 @@
 @section('head')
     <title>پنل کاربری | اضافه کردن کاربر</title>
     <style>
+        body{
+            padding-right:0px !important;
+        }
         .nav-link {
             transform: scale(0.9);
         }
@@ -119,194 +122,209 @@
         <section class="content">
             <div class="container-fluid">
                 <div class="row justify-content-center">
-                    <div class="col-lg-3 col-12">
-                        <div class="small-box bg-warning-gradient py-3" data-toggle="modal"
-                             data-target="#createNewUser">
-                            <div class="inner">
-                                <p>ایجاد کابر</p>
-                            </div>
-                            <div class="icon">
-                                <i class="ion ion-person-add"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-12">
-                        <div class="small-box bg-success-gradient py-3" data-toggle="modal"
-                             data-target="#createNewDepartment">
-                            <div class="inner">
-
-                                <p>ایجاد زیرمجموعه </p>
-                            </div>
-                            <div class="icon">
-                                <i class="ion ion-person-stalker"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-12">
-                        <div class="small-box bg-info-gradient py-3" data-toggle="modal" data-target="#createNewRole">
-                            <div class="inner">
-
-                                <p>ایجاد وظیفه </p>
-                            </div>
-                            <div class="icon">
-                                <i class="ion ion-briefcase"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Modal create Department -->
-                <div class="modal fade" id="createNewDepartment" tabindex="-1" role="dialog"
-                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-body">
-                                <form action="{{route('create-department')}}" method="POST">
-                                    @csrf
-                                    <label class="label" for="name">نام زیرمجموعه</label>
-                                    <div class="input-group mb-4">
-                                        <input id="name" type="text" class="form-control" placeholder="نام زیرمجموعه" name="label">
-                                    </div>
-                                    <div class="row justify-content-center " style="border-top: 1px solid #e9ecef;">
-                                        <!-- /.col -->
-                                        <div class="col-10 mt-2">
-                                            <button type="submit"
-                                                    class="btn btn-primary btn-block btn-flat">{{__('ایجاد زیرمجموعه')}}</button>
-                                        </div>
-                                        <!-- /.col -->
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Modal -->
-
-                <!-- Modal create role -->
-                <div class="modal fade" id="createNewRole" tabindex="-1" role="dialog"
-                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form action="{{route('create-role')}}" method="POST">
-                                    @csrf
-                                    <label class="label" for="name">نام وظیفه</label>
-                                    <div class="input-group mb-4">
-                                        <input id="name" type="text" class="form-control" placeholder="نام وظیفه" name="label">
-                                    </div>
-                                    <div class="input-group" id="permissions">
-                                        <label for="permissions">دسترسی ها</label>
-                                        <div class="row">
-                                            @foreach(\App\Models\Permission::all() as $p)
-                                                <div class="col-4  shadow-sm border" style="border-radius:5px;">
-                                                    <div class="py-2">
-                                                        <p class="d-inline">{{$p->label}}</p>
-                                                        <label class="switch float-left">
-                                                            <input type="checkbox" name="permissions[]" value="{{$p->id}}">
-                                                            <span class="slider round"></span>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                    <div class="row justify-content-center " style="border-top: 1px solid #e9ecef;">
-                                        <!-- /.col -->
-                                        <div class="col-10 mt-2">
-                                            <button type="submit"
-                                                    class="btn btn-primary btn-block btn-flat">{{__('ایجاد وظیفه')}}</button>
-                                        </div>
-                                        <!-- /.col -->
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!--Modal-->
-
-                <!-- Modal create user -->
-                <div style="z-index: 9999!important;" class="modal fade " id="createNewUser" tabindex="-1" role="dialog"
-                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="row justify-content-center">
-                                <div class="modal-body my-1 py-1">
-                                    <form action="{{route('create-user')}}" method="POST">
-                                        @csrf
-                                        <label for="name">نام</label>
-                                        <div class="input-group mb-3">
-                                            <input id="name" name="name" type="text" class="form-control"
-                                                   placeholder="نام">
-                                            <div class="input-group-append">
-                                                <span class="fa fa-user px-3 input-group-text"></span>
-                                            </div>
-                                        </div>
-                                        <label for="PersonalNumber">شماره پرسنلی</label>
-                                        <div class="input-group mb-3">
-                                            <input id="PersonalNumber" name="personalNumber" type="text"
-                                                   class="form-control"
-                                                   placeholder="شماره پرسنلی">
-                                            <div class="input-group-append">
-                                                <span class="fa fa-id-card-o input-group-text"></span>
-                                            </div>
-                                        </div>
-                                        <label for="password">رمز عبور</label>
-                                        <div class="input-group mb-3">
-                                            <input id="password" name="password" type="password" class="form-control"
-                                                   placeholder="رمز عبور کاربر">
-                                            <div class="input-group-append">
-                                                <span class="fa fa-lock px-3 input-group-text"></span>
-                                            </div>
-                                        </div>
-                                        <label for="department">نام زیرمجموعه</label>
-                                        <div class="input-group mb-3">
-                                            <select id="department" name="department" class="form-control">
-                                                @foreach(\App\Models\Department::all() as $d)
-                                                    <option value="{{$d->id}}">{{$d->label}}</option>
-                                                @endforeach
-                                            </select>
-                                            <div class="input-group-append">
-                                                <span class="fa fa-users input-group-text"></span>
-                                            </div>
-                                        </div>
-                                        <label for="role">نقش</label>
-                                        <div class="input-group mb-3">
-                                            <select id="role" name="role" class="form-control">
-                                                @foreach(\App\Models\Role::all() as $role)
-                                                    <option value="{{$role->id}}">{{$role->label}}</option>
-                                                @endforeach
-                                            </select>
-                                            <div class="input-group-append">
-                                                <span class="fa fa-briefcase input-group-text"></span>
-                                            </div>
-                                        </div>
-                                        <div class="row justify-content-center " style="border-top: 1px solid #e9ecef;">
-                                            <!-- /.col -->
-                                            <div class="col-10 mt-2">
-                                                <button type="submit"
-                                                        class="btn btn-primary btn-block btn-flat">{{__('ایجاد کاربر')}}</button>
-                                            </div>
-                                            <!-- /.col -->
-                                        </div>
-                                    </form>
+                    @can('create-user')
+                        <div class="col-lg-3 col-12">
+                            <div class="small-box bg-warning-gradient py-3" data-toggle="modal"
+                                 data-target="#createNewUser">
+                                <div class="inner">
+                                    <p>ایجاد کاربر</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-person-add"></i>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        <!-- Modal create user -->
+                        <div style="z-index: 9999!important;" class="modal fade " id="createNewUser" tabindex="-1"
+                             role="dialog"
+                             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <div class="modal-body my-1 py-1">
+                                            <form action="{{route('create-user')}}" method="POST">
+                                                @csrf
+                                                <label for="name">نام</label>
+                                                <div class="input-group mb-3">
+                                                    <input id="name" name="name" type="text" class="form-control"
+                                                           placeholder="نام">
+                                                    <div class="input-group-append">
+                                                        <span class="fa fa-user px-3 input-group-text"></span>
+                                                    </div>
+                                                </div>
+                                                <label for="PersonalNumber">شماره پرسنلی</label>
+                                                <div class="input-group mb-3">
+                                                    <input id="PersonalNumber" name="personalNumber" type="text"
+                                                           class="form-control"
+                                                           placeholder="شماره پرسنلی">
+                                                    <div class="input-group-append">
+                                                        <span class="fa fa-id-card-o input-group-text"></span>
+                                                    </div>
+                                                </div>
+                                                <label for="password">رمز عبور</label>
+                                                <div class="input-group mb-3">
+                                                    <input id="password" name="password" type="password"
+                                                           class="form-control"
+                                                           placeholder="رمز عبور کاربر">
+                                                    <div class="input-group-append">
+                                                        <span class="fa fa-lock px-3 input-group-text"></span>
+                                                    </div>
+                                                </div>
+                                                <label for="department">نام زیرمجموعه</label>
+                                                <div class="input-group mb-3">
+                                                    <select id="department" name="department" class="form-control">
+                                                        @foreach(\App\Models\Department::all() as $d)
+                                                            <option value="{{$d->id}}">{{$d->label}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <div class="input-group-append">
+                                                        <span class="fa fa-users input-group-text"></span>
+                                                    </div>
+                                                </div>
+                                                <label for="role">نقش</label>
+                                                <div class="input-group mb-3">
+                                                    <select id="role" name="role" class="form-control">
+                                                        @foreach(\App\Models\Role::all() as $role)
+                                                            <option value="{{$role->id}}">{{$role->label}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <div class="input-group-append">
+                                                        <span class="fa fa-briefcase input-group-text"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="row justify-content-center "
+                                                     style="border-top: 1px solid #e9ecef;">
+                                                    <!-- /.col -->
+                                                    <div class="col-10 mt-2">
+                                                        <button type="submit"
+                                                                class="btn btn-primary btn-block btn-flat">{{__('ایجاد کاربر')}}</button>
+                                                    </div>
+                                                    <!-- /.col -->
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal -->
+                    @endcan
+                    @can('create-department')
+                        <div class="col-lg-3 col-12">
+                            <div class="small-box bg-success-gradient py-3" data-toggle="modal"
+                                 data-target="#createNewDepartment">
+                                <div class="inner">
+
+                                    <p>ایجاد زیرمجموعه </p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-person-stalker"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal create Department -->
+                        <div class="modal fade" id="createNewDepartment" tabindex="-1" role="dialog"
+                             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <form action="{{route('create-department')}}" method="POST">
+                                            @csrf
+                                            <label class="label" for="name">نام زیرمجموعه</label>
+                                            <div class="input-group mb-4">
+                                                <input id="name" type="text" class="form-control"
+                                                       placeholder="نام زیرمجموعه"
+                                                       name="label">
+                                            </div>
+                                            <div class="row justify-content-center "
+                                                 style="border-top: 1px solid #e9ecef;">
+                                                <!-- /.col -->
+                                                <div class="col-10 mt-2">
+                                                    <button type="submit"
+                                                            class="btn btn-primary btn-block btn-flat">{{__('ایجاد زیرمجموعه')}}</button>
+                                                </div>
+                                                <!-- /.col -->
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal -->
+                    @endcan
+                    @can('create-role')
+                        <div class="col-lg-3 col-12">
+                            <div class="small-box bg-info-gradient py-3" data-toggle="modal"
+                                 data-target="#createNewRole">
+                                <div class="inner">
+
+                                    <p>ایجاد وظیفه </p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-briefcase"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal create role -->
+                        <div class="modal fade" id="createNewRole" tabindex="-1" role="dialog"
+                             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="{{route('create-role')}}" method="POST">
+                                            @csrf
+                                            <label class="label" for="name">نام وظیفه</label>
+                                            <div class="input-group mb-4">
+                                                <input id="name" type="text" class="form-control"
+                                                       placeholder="نام وظیفه"
+                                                       name="label">
+                                            </div>
+                                            <div class="input-group" id="permissions">
+                                                <label for="permissions">دسترسی ها</label>
+                                                <div class="row">
+                                                    @foreach(\App\Models\Permission::all() as $p)
+                                                        <div class="col-4  shadow-sm border" style="border-radius:5px;">
+                                                            <div class="py-2">
+                                                                <p class="d-inline">{{$p->label}}</p>
+                                                                <label class="switch float-left">
+                                                                    <input type="checkbox" name="permissions[]"
+                                                                           value="{{$p->id}}">
+                                                                    <span class="slider round"></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                            <div class="row justify-content-center "
+                                                 style="border-top: 1px solid #e9ecef;">
+                                                <!-- /.col -->
+                                                <div class="col-10 mt-2">
+                                                    <button type="submit"
+                                                            class="btn btn-primary btn-block btn-flat">{{__('ایجاد وظیفه')}}</button>
+                                                </div>
+                                                <!-- /.col -->
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--Modal-->
+                    @endcan
                 </div>
-                <!-- Modal -->
+
 
                 <div class="row justify-content-center">
                     <div class="col-lg-8 col-12">
@@ -340,7 +358,7 @@
 @section('js')
     <script>
         let hash = location.hash;
-        if(hash){
+        if (hash) {
             $('.active').removeClass('active');
             $(hash).addClass('active');
             $(`a[href$="${hash}"]`).addClass('active');
