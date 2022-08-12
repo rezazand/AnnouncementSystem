@@ -26,6 +26,7 @@
             <!-- /.mailbox-read-message -->
         </div>
     <!-- /.card-body -->
+        @if($message->attachments)
         <div class="card-footer bg-white">
             <ul class="mailbox-attachments clearfix">
                 @foreach($message->attachments()->get() as $attach)
@@ -44,6 +45,7 @@
                 @endforeach
             </ul>
         </div>
+        @endif
     </div>
     <!-- /. box -->
 @endsection

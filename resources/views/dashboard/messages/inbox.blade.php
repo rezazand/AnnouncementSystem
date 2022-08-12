@@ -50,11 +50,14 @@
                             <td class="mailbox-star"><a href="#"><i
                                         class="fa fa-star-o text-warning"></i></a></td>
                             <td class="mailbox-name">{{\Route::currentRouteName() =='inbox'?\App\Models\User::find($message->user_id)->name:\App\Models\User::find($message->to)->name}}
-                                @if(\Route::currentRouteName() =='inbox' and $message->status) <span
-                                    class="badge badge-pill badge-warning py-1">جدید</span>@endif</td>
+                                @if(\Route::currentRouteName() =='inbox' and $message->status)
+                                    <span
+                                        class="badge badge-pill badge-warning py-1">جدید
+                                    </span>
+                                @endif
+                            </td>
                             <td class="mailbox-subject"><a
-                                    href="{{route('inbox').'/'."$message->id"}}">{{substr($message->subject,0,60)}}@if(strlen($message->subject) >60)
-                                        ...@endif</a></td>
+                                    href="{{route('inbox').'/'."$message->id"}}">{{$message->subject}}</a></td>
                             <td class="mailbox-date">{{$message->created_at}}</td>
                             <td class="mailbox-date"><a href="{{route('workflow',"$message->id")}}"><i
                                         class="fa fa-eye"></i></a></td>

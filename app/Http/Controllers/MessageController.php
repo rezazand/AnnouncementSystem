@@ -8,7 +8,6 @@ use App\Models\Reply;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
 use function PHPUnit\Framework\isInstanceOf;
 
 class MessageController extends Controller
@@ -32,6 +31,7 @@ class MessageController extends Controller
 
     public function read(Message $message)
     {
+        $this->authorize('related',$message);
 
         if ($message->status == 1) {
             $message->status = 0 ;
@@ -59,16 +59,14 @@ class MessageController extends Controller
 
     public function create(Request $input)
     {
-
-        Validator::make($input->all(), [
+        $validationInput = $input;
+        $validationInput['body']=str_replace('&nbsp;','',strip_tags($validationInput->body));
+        $this->validate($validationInput    ,[
             'subject' => ['required', 'string', 'max:55'],
-            'body' => [
-                'required',
-                'string',
-            ],
+            'body' => ['required', 'string', 'min:5'],
             'to'=>['required','string'],
-            'your_file_input' => ['file','size:32000'],
-        ])->validateWithBag('createNewMessage');
+            'attachment' => ['file','max:32000'],
+        ]);
 
         $message = new Message();
         $message->forceFill([
@@ -88,7 +86,7 @@ class MessageController extends Controller
             $attachment->message()->associate($message)->save();
 
         }
-        return redirect()->route('inbox');
+        return redirect()->route('sent');
     }
 
     public function download(Attachment $file)

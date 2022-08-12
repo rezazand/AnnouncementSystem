@@ -8,12 +8,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use phpDocumentor\Reflection\Types\Boolean;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
 
-class User extends Authenticatable implements HasMedia
+class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, InteractsWithMedia;
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -24,6 +22,7 @@ class User extends Authenticatable implements HasMedia
         'name',
         'email',
         'password',
+        'avatar'
     ];
 
     /**
@@ -69,5 +68,10 @@ class User extends Authenticatable implements HasMedia
     public function hasRole($role):bool
     {
         return !!$role->find($this->role->id);
+    }
+
+    public function related($message):bool
+    {
+        return ($this->id == $message->to) or ($this->id == $message->user_id);
     }
 }

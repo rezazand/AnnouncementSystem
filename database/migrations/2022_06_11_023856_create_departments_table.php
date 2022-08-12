@@ -14,12 +14,12 @@ class CreateDepartmentsTable extends Migration
     public function up()
     {
         Schema::create('departments', function (Blueprint $table) {
-            $table->increments('id', true);
+            $table->id('id', true);
             $table->string('label');
             $table->timestamps();
         });
         Schema::table('users', function (Blueprint $table) {
-            $table->foreign('department_id')->references('id')->on('departments')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('department_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
 

@@ -39,7 +39,7 @@
                                 <div class="card-body box-profile">
                                     <div class="text-center">
                                         <img class="profile-user-img img-fluid img-circle"
-                                             src="{{auth()->user()->getMedia()->last()? auth()->user()->getMedia()->last()->getUrl():'/avatar.png'}}"
+                                             src="{{auth()->user()->avatar}}"
                                              alt="User profile picture">
                                     </div>
 
@@ -65,15 +65,15 @@
                                     <div class="tab-content">
 
                                         <div class="tab-pane active " id="settings">
-                                            <form action="{{route('user-profile-information.update')}}" method="post"
+                                            <form action="{{route('profile.update')}}" method="post"
                                                   enctype="multipart/form-data">
                                             @csrf
                                             @method('PUT')
                                             <!-- START LOCK SCREEN ITEM -->
                                                 <div class="mx-auto col-2">
                                                     <label for="file-input" class="image_area">
-                                                        <img class="profile-user-img img-circle"
-                                                             src="{{auth()->user()->getMedia()->last()? auth()->user()->getMedia()->last()->getUrl():'/avatar.png'}}"
+                                                        <img  id="preview" class="profile-user-img img-circle"
+                                                             src="{{auth()->user()->avatar}}"
                                                              alt="User Image">
                                                         <input id="file-input" type="file" name="avatar"
                                                                style="display: none;">
@@ -129,5 +129,21 @@
     </div>
 @endsection
 @section('js')
-    <script></script>
+    <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#preview').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#file-input").change(function(){
+            readURL(this);
+        });
+    </script>
 @endsection

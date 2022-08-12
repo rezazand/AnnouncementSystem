@@ -97,7 +97,7 @@
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="image">
                     <img
-                        src="{{auth()->user()->getFirstMediaUrl()? auth()->user()->getFirstMediaUrl():asset('avatar.png')}}"
+                        src="{{auth()->user()->avatar}}"
                         class="img-circle elevation-2" style="width: 35px;height: 35px;" alt="User Image">
                 </div>
                 <div class="info">

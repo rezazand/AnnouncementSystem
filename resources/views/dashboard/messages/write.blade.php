@@ -1,12 +1,11 @@
 @extends('dashboard.messages.layout')
 @section('head')
-    @livewireStyles
     <!-- Select2 -->
     <link rel="stylesheet" href="{{asset('plugins/select2/select2.min.css')}}">
-
 @endsection
 @section('messages-content')
-    <form action="{{route('create')}}" method="POST" class="card card-primary card-outline" enctype="multipart/form-data">
+    <form action="{{route('create')}}" method="POST" class="card card-primary card-outline"
+          enctype="multipart/form-data">
         @csrf
         <div class="card-header">
             <h3 class="card-title">ایجاد ابلاغیه جدید</h3>
@@ -15,34 +14,42 @@
 
         <div class="card-body">
 
-                @livewire('search-users')
-                <div class="form-group">
-                    <input name="subject" class="form-control" placeholder="عنوان ابلاغیه :">
-                </div>
-                <div class="form-group">
-                    <textarea name="body" id="compose-textarea" class="form-control" style="height: 300px">
-
-                    </textarea>
-                </div>
-                <div class="form-group">
-                    <div class="btn btn-default btn-file">
-                        <i class="fa fa-paperclip"></i> فایل ضمیمه
-                        <input id="attachment" dirname="atachment" type="file" name="attachment">
-                        <label for="attachment" style="border-radius: 8px" class="text-sm d-inline border input-group px-2 py-1 my-1f ">there is no
-                            file...
-                        </label>
-                    </div>
-                    <p class="help-block">حداکثر 32MB</p>
-                </div>
+            @livewire('search-users')
+            <div class="form-group">
+                <input name="subject" class="form-control" placeholder="عنوان ابلاغیه :" autocomplete="off" value="{{old('subject')}}">
+                @error('subject')
+                <p class="text-danger mt-2">{{$message}}</p>
+                @enderror
             </div>
-            <!-- /.card-body -->
-            <div class="card-footer">
-                <div class="float-left">
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-envelope-o"></i> ارسال</button>
-                </div>
-                <a href="{{route('inbox')}}" class="btn btn-default"><i class="fa fa-times"></i> لغو</a>
+            <div class="form-group">
+                <textarea name="body" id="compose-textarea" class="form-control" >{{old('body')}}</textarea>
+                @error('body')
+                <p class="text-danger mt-2">{{$message}}</p>
+                @enderror
             </div>
-            <!-- /.card-footer -->
+            <div class="form-group">
+                <div class="btn btn-default btn-file">
+                    <i class="fa fa-paperclip"></i> فایل ضمیمه
+                    <input id="attachment" dirname="attachment" type="file" name="attachment">
+                    <label for="attachment" style="border-radius: 8px"
+                           class="text-sm d-inline border input-group px-2 py-1 my-1f ">there is no
+                        file...
+                    </label>
+                </div>
+                <p class="help-block">حداکثر 32MB</p>
+                @error('attachment')
+                <p class="text-danger mt-2">{{$message}}</p>
+                @enderror
+            </div>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+            <div class="float-left">
+                <button type="submit" class="btn btn-primary"><i class="fa fa-envelope-o"></i> ارسال</button>
+            </div>
+            <a href="{{route('inbox')}}" class="btn btn-default"><i class="fa fa-times"></i> لغو</a>
+        </div>
+        <!-- /.card-footer -->
     </form>
 
 @endsection
@@ -50,8 +57,7 @@
     <!-- Select2 -->
     <script src="{{asset('plugins/select2/select2.full.min.js')}}"></script>
 
-    @livewireScripts
-    <script >
+    <script>
         $(function () {
             //Initialize Select2 Elements
             $('.select2').select2()
@@ -67,10 +73,21 @@
     <script>
 
         $('#attachment').change(function () {
-            var i = $(this).next('label').clone();
-            var file = $('#attachment')[0].files[0].name;
-            $(this).next('label').text(file);
+            let i = $(this).next('label').clone();
+            let file = $('#attachment')[0].files[0].name;
+            let mb = 1048576;
+            if (this.files[0].size > 32 * mb) {
+                alert("فال ضمیمه نباید بیشتر از 32 مگابایت باشد!");
+                this.value = "";
+            } else {
+                $(this).next('label').text(file);
+            }
         });
+
+        $("input[list='search']").change(function (){
+            $("input[name='subject']").focus();
+        })
+
         $(function () {
             //Add text editor
             ClassicEditor

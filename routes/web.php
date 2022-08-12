@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,7 +16,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function (){
     Route::get('/dashboard',function (){return view('dashboard.master');})->name('dashboard');
-    Route::get('profile',function (){return view('profile');})->name('profile');
+    Route::get('profile',[ProfileController::class,'index'])->name('profile');
+    Route::put('profile/update',[ProfileController::class,'update'])->name('profile.update');
+
     Route::get('messages/inbox',[\App\Http\Controllers\MessageController::class,'inbox'])->name('inbox');
     Route::get('messages/inbox/workflow/{message}',[\App\Http\Controllers\MessageController::class,'workflow'])->name('workflow');
     Route::get('messages/inbox/{message}',[\App\Http\Controllers\MessageController::class,'read'])->name('read');
