@@ -2,12 +2,13 @@
 @section('head')
     <title>پنل کاربری | ابلاغیه ها</title>
     <style>
-        body{
-            padding-right:0px !important;
+        body {
+            padding-right: 0px !important;
         }
+
         .fa-eye {
             color: #0d6efd;
-                        transition: all 0.1s linear;
+            transition: all 0.1s linear;
         }
 
         .fa-eye:hover {
@@ -24,11 +25,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1> مشاهده ابلاغیه ها</h1>
+                        <h1>مکاتبات</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb ">
                             <li class="breadcrumb-item "><a href="{{route('dashboard')}}">خانه</a></li>
+                            <li class="breadcrumb-item active">مکاتبات</li>
                             <li class="breadcrumb-item active">صندوق</li>
                         </ol>
                     </div>
@@ -55,15 +57,11 @@
                     </div>
                     <!-- /.col -->
                     <div class="col-md-3">
-                        @if(\Route::currentRouteName() !=('message.index'))
-                            <a href="{{route('message.index')}}" class="btn btn-primary btn-block mb-3">برگشت <i
-                                    class="fa fa-share"></i></button>
-                            </a>
-                        @else
-                            <a href="{{route('message.create')}}" class="btn btn-primary btn-block mb-3">ایجاد ابلاغیه
-                                جدید
-                            </a>
-                        @endif
+
+                        <a href="{{route('message.create')}}" class="btn btn-primary btn-block mb-3">ایجاد ابلاغیه
+                            جدید
+                        </a>
+
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">پوشه‌ها</h3>
@@ -80,7 +78,7 @@
                                         <a href="#received" class="nav-link active" data-toggle="tab">
                                             <i class="fa fa-inbox"></i> دریافت شده
                                             <span
-                                                class="badge bg-primary float-left">{{auth()->user()->messages('to')->where('status',1)->count()}}</span>
+                                                class="badge bg-primary float-left">{{auth()->user()->received()->where('status',1)->count()}}</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
@@ -94,49 +92,10 @@
                                     {{--                                            <i class="fa fa-file-text-o"></i> پیش نویس--}}
                                     {{--                                        </a>--}}
                                     {{--                                    </li>--}}
-                                    {{--                                    <li class="nav-item">--}}
-                                    {{--                                        <a href="#" class="nav-link">--}}
-                                    {{--                                            <i class="fa fa-trash-o"></i> سطل زباله--}}
-                                    {{--                                        </a>--}}
-                                    {{--                                    </li>--}}
                                 </ul>
                             </div>
                             <!-- /.card-body -->
                         </div>
-                        <!-- /. box -->
-                        {{--<div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">برچسبب‌ها</h3>
-
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" data-widget="collapse"><i
-                                            class="fa fa-minus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="card-body p-0">
-                                <ul class="nav nav-pills flex-column">
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            <i class="fa fa-circle-o text-danger"></i>
-                                            مهم
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            <i class="fa fa-circle-o text-warning"></i> شخصی
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            <i class="fa fa-circle-o text-primary"></i>
-                                            شبکه اجتماعی
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <!-- /.card-body -->
-                        </div>--}}
                         <!-- /.card -->
                     </div>
                     <!-- /.col -->

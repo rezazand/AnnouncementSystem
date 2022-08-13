@@ -6,6 +6,24 @@
 @endsection
 @section('content')
     <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1> مکاتبات</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb ">
+                            <li class="breadcrumb-item "><a href="{{route('dashboard')}}">خانه</a></li>
+                            <li class="breadcrumb-item active">مکاتبات</li>
+                            <li class="breadcrumb-item active">ایجاد</li>
+                        </ol>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+        <div class="content">
         <div class="container-fluid">
             <div class="row justify-content-center ">
                 <div class="col-md-10 mt-2">
@@ -61,6 +79,7 @@
                     </form>
                 </div>
             </div>
+        </div>
         </div>
     </div>
 @endsection

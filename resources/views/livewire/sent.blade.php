@@ -1,4 +1,4 @@
-<div>
+<div xmlns:wire="http://www.w3.org/1999/xhtml">
     <div class="card-header">
         <h3 class="card-title">ارسال شده</h3>
     </div>
@@ -41,11 +41,11 @@
             @foreach($messages as $message)
                 <tr>
                     <td class="mailbox-name">
-                        {{\App\Models\User::find($message->to)->name}}
+                        {{$message->receiver->name}}
                     </td>
 
                     <td class="mailbox-subject"><a
-                            href="{{route('message.index').'/'."$message->id"}}">{{$message->subject}}</a></td>
+                            href="{{route('message.show',$message->id)}}">{{$message->subject}}</a></td>
                     <td class="mailbox-date">{{$message->created_at}}</td>
                     <td class="mailbox-date">
                         <label for="w-{{$message->id}}"><i
@@ -69,7 +69,8 @@
                         <table class="table ">
                             <tr>
                                 <th>ارجاع دهنده</th>
-                                <th>موضوع</th>
+                                <th>نام کار</th>
+                                <th>نوع کار</th>
                                 <th>تاریخ ابلاغ</th>
                                 <th>نتیجه</th>
                                 <th>تاریخ ارجاع</th>
@@ -78,11 +79,12 @@
                                 @foreach($replies as $reply)
                                     <tr>
                                         <td>
-                                            {{\App\Models\User::find($reply->user_id)->name}}<span
+                                            {{$reply->user->name}}<span
                                                 class="badge badge-info"
-                                                style="transform: scale(0.8)">{{\App\Models\User::find($message->user_id)->role->label}}</span>
+                                                style="transform: scale(0.8)">{{$reply->user->role->label}}</span>
                                         </td>
-                                        <td>{{$reply->subject}}</td>
+                                        <td>{{$reply->name}}</td>
+                                        <td>{{$reply->type}}</td>
                                         <td>{{$message->created_at}}</td>
                                         <td>
                                             {{$reply->body}}

@@ -15,7 +15,7 @@ class Sent extends Component
         }else{
             $replies = null;
         }
-        $messages = auth()->user()->messages('user_id')->latest()->paginate(10);
+        $messages = auth()->user()->messages()->latest()->paginate(10);
         return view('livewire.sent',compact('messages','replies'));
     }
 }

@@ -9,7 +9,7 @@
                 <div class="col-md-10 mt-2">
                     <div class="card card-primary card-outline">
                         <div class="card-header">
-                            <h3 class="card-title d-inline">خواندن ابلاغیه</h3>
+                            <h3 class="card-title d-inline">مشاهده ابلاغیه</h3>
                             <a class="btn btn-primary float-left" href="{{redirect()->back()->getTargetUrl()}}">بازگشت
                                 <i
                                     class="fa fa-arrow-left"></i> </a>
@@ -64,7 +64,7 @@
                             </div>
                         @endif
                         <!-- form -->
-                        @if($message->to == auth()->id())
+                        @if($message->user->id == auth()->id())
                             <div class="card card-white  collapsed-card" style="margin-bottom: 0px!important;">
                                 <div class="card-header">
                                     <div class="">
@@ -76,8 +76,8 @@
                                     <!-- /.card-tools -->
                                 </div>
                                 <!-- /.card-header -->
-                                <div class="card-body" style="display: none;">
-{{--                                    {{$message->replies}}--}}
+                                <div class="card-body" >
+                                    @php $status = true @endphp
                                     @if($message->replies != null)
                                         <div class="table-responsive mailbox-messages">
                                             <table class="table table-hover hover text-center text-sm">
@@ -87,7 +87,6 @@
                                                     <th>نتیجه</th>
                                                     <th>تاریخ ارجاع</th>
                                                 </tr>
-                                                    @php $replied = false @endphp
                                                     <tr >
                                                         @foreach($message->replies as $reply)
                                                             @if($reply->user_id == auth()->id())
@@ -103,14 +102,14 @@
                                                             <td>
                                                                 {{$reply->created_at}}
                                                             </td>
-                                                                @php $replied = true @endphp
+                                                                @php $status = false @endphp
                                                             @endif
                                                         @endforeach
                                                     </tr>
                                             </table>
                                         </div>
                                     @endif
-                                    @if(!$replied)
+                                    @if($status)
                                         <form action="{{route('reply',$message->id)}}" method="POST">
                                             @csrf
                                             <div class="form-group">

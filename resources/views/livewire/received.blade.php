@@ -48,7 +48,7 @@
                     </td>
 
                     <td class="mailbox-subject"><a
-                            href="{{route('message.index').'/'."$message->id"}}">{{$message->subject}}</a></td>
+                            href="{{route('message.show',$message->id)}}">{{$message->subject}}</a></td>
                     <td class="mailbox-date">{{$message->created_at}}</td>
                 </tr>
             @endforeach
