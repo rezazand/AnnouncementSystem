@@ -17,11 +17,9 @@ class CreateRepliesTable extends Migration
             $table->id('id', true);
             $table->foreignId('message_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->text('subject');
+            $table->string('name');
+            $table->string('type');
             $table->text('body');
-            $table->string('attachments')->nullable();
-            $table->integer('to')->unsigned();
-            $table->integer('status');
             $table->timestamps();
         });
     }

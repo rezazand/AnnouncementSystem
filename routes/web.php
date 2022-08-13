@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -13,22 +14,27 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', function () {
+    return redirect()->route('login');
+});
 
 Route::middleware('auth')->group(function (){
+
     Route::get('/dashboard',function (){return view('dashboard.master');})->name('dashboard');
+
+    //---------------------------Profile-----------------------//
+
     Route::get('profile',[ProfileController::class,'index'])->name('profile');
     Route::put('profile/update',[ProfileController::class,'update'])->name('profile.update');
 
-    Route::get('messages/inbox',[\App\Http\Controllers\MessageController::class,'inbox'])->name('inbox');
-    Route::get('messages/inbox/workflow/{message}',[\App\Http\Controllers\MessageController::class,'workflow'])->name('workflow');
-    Route::get('messages/inbox/{message}',[\App\Http\Controllers\MessageController::class,'read'])->name('read');
-    Route::get('messages/inbox/download/{file}',[\App\Http\Controllers\MessageController::class,'download'])->name('download');
-    Route::get('messages/inbox/reply/{reply}',[\App\Http\Controllers\MessageController::class,'check'])->name('check');
-    Route::get('messages/sent',[\App\Http\Controllers\MessageController::class,'sent'])->name('sent');
-    Route::get('messages/write',[\App\Http\Controllers\MessageController::class,'write'])->name('write');
-    Route::post('messages/create',[\App\Http\Controllers\MessageController::class,'create'])->name('create');
+    //---------------------------Messages-----------------------//
 
-    //---------------------------Admin-----------------------//
+    Route::resource('message',\App\Http\Controllers\MessageController::class)->except(['edit','destroy','update']);
+    Route::post('reply/{message}',[MessageController::class,'reply'])->name('reply');
+    Route::get('messages/inbox/download/{file}',[MessageController::class,'download'])->name('download');
+
+    //---------------------------Manage-----------------------//
+
     Route::middleware('can:admin')->group(function (){
         Route::get('manage',[\App\Http\Controllers\ManageController::class,'index'])->name('manage');
 
@@ -44,8 +50,5 @@ Route::middleware('auth')->group(function (){
         Route::post('manage/role/edit',[\App\Http\Controllers\ManageController::class,'editRole'])->name('edit-role')->can('edit-role');
         Route::get('manage/role/delete/{role}',[\App\Http\Controllers\ManageController::class,'deleteRole'])->name('delete-role')->can('delete-role');
     });
-});
-Route::get('/', function () {
-    return redirect()->route('login');
 });
 

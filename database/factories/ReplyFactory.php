@@ -18,10 +18,9 @@ class   ReplyFactory extends Factory
         return [
             'message_id'=>Message::all()->random()->id,
             'user_id'=>User::all()->random()->id,
-            'subject'=>$this->faker->title(),
+            'name'=>$this->faker->sentence,
+            'type'=>$this->faker->title(),
             'body'=>$this->faker->text(),
-            'to'=>User::all()->random()->id,
-            'status'=>$this->faker->numberBetween(0,1)
         ];
     }
 }

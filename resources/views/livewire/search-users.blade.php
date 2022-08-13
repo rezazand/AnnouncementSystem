@@ -5,7 +5,7 @@
     @enderror
     <datalist id="search" >
         @foreach($contacts as $contact)
-            <option   value="{{$contact['name']}}">{{$contact->role->label}}</option>
+            <option value="{{$contact['name']}}">{{$contact->role->label}}</option>
         @endforeach
     </datalist>
 </div>

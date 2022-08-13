@@ -8,102 +8,112 @@ use App\Models\Reply;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use function PHPUnit\Framework\isInstanceOf;
+use Illuminate\View\View;
 
 class MessageController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
-    public function inbox()
+    public function index(): View
     {
-        $messages =auth()->user()->messages('to')->latest()->paginate(10);
-        return view('dashboard.messages.inbox',compact('messages'));
-    }
-
-    public function sent()
-    {
-        $messages = auth()->user()->messages('user_id')->latest()->paginate(10);
-        return view('dashboard.messages.inbox',compact('messages'));
-    }
-
-    public function read(Message $message)
-    {
-        $this->authorize('related',$message);
-
-        if ($message->status == 1) {
-            $message->status = 0 ;
-            $message->save();
-        }
-        return view('dashboard.messages.read',compact('message'));
-    }
-
-    public function check(Reply $reply)
-    {
-        $message = $reply;
-        return view('dashboard.messages.read',compact('message'));
-
+        return view('dashboard.messages.index');
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
-    public function write()
+    public function create(): View
     {
-        return view('dashboard.messages.write');
-    }
-
-    public function create(Request $input)
-    {
-        $validationInput = $input;
-        $validationInput['body']=str_replace('&nbsp;','',strip_tags($validationInput->body));
-        $this->validate($validationInput    ,[
-            'subject' => ['required', 'string', 'max:55'],
-            'body' => ['required', 'string', 'min:5'],
-            'to'=>['required','string'],
-            'attachment' => ['file','max:32000'],
-        ]);
-
-        $message = new Message();
-        $message->forceFill([
-            'user_id'=>auth()->user()->id,
-            'subject'=>$input->subject,
-            'body'=>$input->body,
-            'to'=>User::where('name',$input->to)->first()->id
-        ])->save();
-
-        if ($input->attachment != null){
-            $uploadedFile = $input->file('attachment');
-            $folder = time().(explode('.',$uploadedFile->getClientOriginalName())[0]);
-            $filename = time().$uploadedFile->getClientOriginalName();
-            Storage::disk('local')->putFileAs('files/'.$folder,$uploadedFile,$filename);
-            $attachment = new Attachment();
-            $attachment->filename =$filename;
-            $attachment->message()->associate($message)->save();
-
-        }
-        return redirect()->route('sent');
-    }
-
-    public function download(Attachment $file)
-    {
-        return Storage::download("files/".(explode('.',$file->filename))[0].'/' . $file->filename);
+        return view('dashboard.messages.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
+    public function store(Request $request)
+    {
+        $validationInput = $request;
+        $validationInput['body'] = str_replace('&nbsp;', '', strip_tags($request->body));
+        $this->validate($validationInput, [
+            'subject' => ['required', 'string', 'max:55'],
+            'body' => ['required', 'string', 'min:5'],
+            'to' => ['required', 'string', 'exists:users,name'],
+            'attachment' => ['file', 'max:32000'],
+        ]);
+
+        $message = new Message();
+        $message->forceFill([
+            'user_id' => auth()->user()->id,
+            'subject' => $request->subject,
+            'body' => $request->body,
+            'to' => User::where('name', $request->to)->first()->id
+        ])->save();
+
+        if ($request->attachment != null) {
+            $uploadedFile = $request->file('attachment');
+            $folder = time() . (explode('.', $uploadedFile->getClientOriginalName())[0]);
+            $filename = time() . $uploadedFile->getClientOriginalName();
+            Storage::disk('local')->putFileAs('files/' . $folder, $uploadedFile, $filename);
+            $attachment = new Attachment();
+            $attachment->filename = $filename;
+            $attachment->message()->associate($message)->save();
+
+        }
+        return redirect()->route('message.index');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     */
+    public function show(Message $message): View
+    {
+
+        $this->authorize('related', $message);
+
+        if ($message->status == 1) {
+            $message->status = 0;
+            $message->save();
+        }
+        return view('dashboard.messages.show', compact('message'));
+    }
+
+    public function download(Attachment $file)
+    {
+        return Storage::download("files/" . (explode('.', $file->filename))[0] . '/' . $file->filename);
+    }
+
+
     public function workflow(Message $message)
     {
         $replies = $message->replies;
-        return view('dashboard.messages.workflow',compact('message','replies'));
+        return view('dashboard.messages.workflow', compact('message', 'replies'));
     }
 
+    public function reply(Request $request,Message $message)
+    {
+
+        $this->validate($request, [
+            'name' => 'required|min:3',
+            'type' => 'required|min:3',
+            'body' => 'required|min:3'
+        ]);
+
+        $reply = new Reply();
+        $reply->body = $request->input('body');
+        $reply->type = $request->input('type');
+        $reply->name = $request->input('name');
+        $reply->user_id = auth()->id();
+        $reply->message_id = $message->id;
+        $reply->save();
+
+
+        return redirect()->route('message.index');
+    }
 }

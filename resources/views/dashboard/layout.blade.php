@@ -67,7 +67,7 @@
                     <span class="float-left text-muted text-sm">2 روز</span>
                 </a>
                 <div class="dropdown-divider"></div>
-                <a href="{{route('inbox')}}" class="dropdown-item dropdown-footer">مشاهده همه نوتیفیکیشن</a>
+                <a href="{{route('message.index')}}" class="dropdown-item dropdown-footer">مشاهده همه نوتیفیکیشن</a>
             </div>
         </li>
 
@@ -97,7 +97,7 @@
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="image">
                     <img
-                        src="{{auth()->user()->avatar}}"
+                        src="{{'/'.auth()->user()->avatar}}"
                         class="img-circle elevation-2" style="width: 35px;height: 35px;" alt="User Image">
                 </div>
                 <div class="info">
@@ -129,13 +129,13 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{route('inbox')}}" class="nav-link" id="inbox">
+                                <a href="{{route('message.index')}}" class="nav-link" id="inbox">
                                     <i class="fa fa-circle-o nav-icon"></i>
                                     <p>صندوق</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('write')}}" class="nav-link" id="write">
+                                <a href="{{route('message.create')}}" class="nav-link" id="write">
                                     <i class="fa fa-circle-o nav-icon"></i>
                                     <p>ایجاد</p>
                                 </a>
@@ -215,7 +215,7 @@
     const processChange = debounce(() => invokeModal(modalName));
 
 
-    function debounce(func, timeout = 600) {
+    function debounce(func, timeout = 1000) {
         let timer;
         return (...args) => {
             clearTimeout(timer);
@@ -228,6 +228,7 @@
     function invokeModal(name) {
         $(`#${name}`).modal('show');
     }
+
 </script>
 @yield('js')
 </body>

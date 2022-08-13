@@ -1,7 +1,20 @@
 @extends('dashboard.layout')
 @section('head')
     <title>پنل کاربری | ابلاغیه ها</title>
-    @yield('head')
+    <style>
+        body{
+            padding-right:0px !important;
+        }
+        .fa-eye {
+            color: #0d6efd;
+                        transition: all 0.1s linear;
+        }
+
+        .fa-eye:hover {
+            cursor: pointer;
+            transform: scale(1.1);
+        }
+    </style>
 @endsection
 @section('content')
     <!-- Content Wrapper. Contains page content -->
@@ -16,24 +29,7 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb ">
                             <li class="breadcrumb-item "><a href="{{route('dashboard')}}">خانه</a></li>
-                            @if(Route::currentRouteName() =='inbox')
-                                <li class="breadcrumb-item active">صندوق</li>
-                                <li class="breadcrumb-item active">دریافت شده</li>
-                            @elseif(Route::currentRouteName() =='sent')
-                                <li class="breadcrumb-item active">صندوق</li>
-                                <li class="breadcrumb-item active">ارسال شده</li>
-
-                            @elseif(Route::currentRouteName() =='read')
-                                <li class="breadcrumb-item active"><a href="{{route('inbox')}}">صندوق</a></li>
-                                <li class="breadcrumb-item active">خواندن</li>
-                            @elseif(Route::currentRouteName() == 'write')
-                                <li class="breadcrumb-item active"><a href="{{route('inbox')}}">صندوق</a></li>
-                                <li class="breadcrumb-item active">ایجاد ابلاغیه</li>
-                            @else
-                                <li class="breadcrumb-item active"><a href="{{route('inbox')}}">صندوق</a></li>
-                                <li class="breadcrumb-item active">گردش کار</li>
-                            @endif
-
+                            <li class="breadcrumb-item active">صندوق</li>
                         </ol>
                     </div>
                 </div>
@@ -44,17 +40,28 @@
         <section class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-9">
-                        @yield('messages-content')
+                    <div class="col-md-9 tab-content">
+                        <div class="tab-pane active" id="received">
+                            <div class="card card-primary card-outline">
+                                @livewire('received')
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="sent">
+                            <div class="card card-primary card-outline">
+
+                                @livewire('sent')
+                            </div>
+                        </div>
                     </div>
                     <!-- /.col -->
                     <div class="col-md-3">
-                        @if(\Route::currentRouteName() !=('inbox' or 'sent'))
-                            <a href="{{route('inbox')}}" class="btn btn-primary btn-block mb-3">برگشت <i
+                        @if(\Route::currentRouteName() !=('message.index'))
+                            <a href="{{route('message.index')}}" class="btn btn-primary btn-block mb-3">برگشت <i
                                     class="fa fa-share"></i></button>
                             </a>
                         @else
-                            <a href="{{route('write')}}" class="btn btn-primary btn-block mb-3">ایجاد ابلاغیه جدید
+                            <a href="{{route('message.create')}}" class="btn btn-primary btn-block mb-3">ایجاد ابلاغیه
+                                جدید
                             </a>
                         @endif
                         <div class="card">
@@ -69,17 +76,19 @@
                             </div>
                             <div class="card-body p-0">
                                 <ul class="nav nav-pills flex-column">
-                                    <li class="nav-item active">
-                                        <a href="{{route('inbox')}}" class="nav-link">
+                                    <li class="nav-item">
+                                        <a href="#received" class="nav-link active" data-toggle="tab">
                                             <i class="fa fa-inbox"></i> دریافت شده
-                                            <span class="badge bg-primary float-left">{{auth()->user()->messages('to')->where('status',1)->count()}}</span>
+                                            <span
+                                                class="badge bg-primary float-left">{{auth()->user()->messages('to')->where('status',1)->count()}}</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="{{route('sent')}}" class="nav-link">
+                                        <a href="#sent" class="nav-link" data-toggle="tab">
                                             <i class="fa fa-envelope-o"></i> ارسال شده
                                         </a>
                                     </li>
+
                                     {{--                                    <li class="nav-item">--}}
                                     {{--                                        <a href="#" class="nav-link">--}}
                                     {{--                                            <i class="fa fa-file-text-o"></i> پیش نویس--}}
@@ -138,8 +147,5 @@
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
-@endsection
-@section('js')
-    @yield('js')
 @endsection
 
