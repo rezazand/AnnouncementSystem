@@ -9,7 +9,7 @@ class Received extends Component
 {
     public function render()
     {
-        $messages = auth()->user()->received()->latest()->paginate(10);
+        $messages = auth()->user()->messages()->where('action','receive')->latest()->paginate(10);
         return view('livewire.received',compact('messages'));
     }
 }

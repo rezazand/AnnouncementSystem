@@ -15,14 +15,16 @@
         @if($target == 'admins')
             @foreach($contacts as $contact)
                 @if($contact->isAdmin())
-                    <option value="{{$contact['name']}}">{{$contact->department->label}}
-                        : {{$contact->role->label}}</option>
+                    <option value="{{$contact['name']}}">
+                        {{$contact->department->label}}: {{$contact->role->label}}
+                    </option>
                 @endif
             @endforeach
         @else
             @foreach($contacts as $contact)
-                <option value="{{$contact['name']}}">{{$contact->department->label}}
-                    : {{$contact->role->label}}</option>
+                <option value="{{$contact->name}}">
+                    {{$contact->department->label}}: {{$contact->role->label}}
+                </option>
             @endforeach
         @endif
     </datalist>

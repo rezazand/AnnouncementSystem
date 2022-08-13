@@ -78,7 +78,7 @@
                                         <a href="#received" class="nav-link active" data-toggle="tab">
                                             <i class="fa fa-inbox"></i> دریافت شده
                                             <span
-                                                class="badge bg-primary float-left">{{auth()->user()->received()->where('status',1)->count()}}</span>
+                                                class="badge bg-primary float-left">{{auth()->user()->messages()->where('action','receive')->where('status',1)->count()}}</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">

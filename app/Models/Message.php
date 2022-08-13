@@ -9,13 +9,9 @@ class Message extends Model
 {
     use HasFactory;
 
-    public function user()
+    public function users()
     {
-        return $this->belongsTo(User::class);
-    }
-    public function receiver()
-    {
-        return $this->belongsTo(User::class,'to','id');
+        return $this->belongsToMany(User::class);
     }
 
     public function attachments()
@@ -27,4 +23,15 @@ class Message extends Model
     {
         return $this->hasMany(Reply::class);
     }
+
+    public function sender()
+    {
+        return $this->users()->where('action','send')->first();
+    }
+
+    public function receiver()
+    {
+        return $this->users()->where('action','receive')->first();
+    }
+
 }

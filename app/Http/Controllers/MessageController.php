@@ -49,12 +49,13 @@ class MessageController extends Controller
 
         $message = new Message();
         $message->forceFill([
-            'user_id' => auth()->user()->id,
             'subject' => $request->subject,
             'body' => $request->body,
-            'to' => User::where('name', $request->to)->first()->id
         ])->save();
 
+        $message->users()->attach(User::where('name', $request->to)->first()->id,['action'=>'receive']);
+        $message->users()->attach(auth()->id(),['action'=>'send']);
+        //TODO
         if ($request->attachment != null) {
             $uploadedFile = $request->file('attachment');
             $folder = time() . (explode('.', $uploadedFile->getClientOriginalName())[0]);

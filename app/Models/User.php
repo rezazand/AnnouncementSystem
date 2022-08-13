@@ -46,12 +46,7 @@ class User extends Authenticatable
 
     public function messages()
     {
-        return $this->hasMany(Message::class);
-    }
-
-    public function received()
-    {
-        return $this->hasMany(Message::class, 'to');
+        return $this->belongsToMany(Message::class);
     }
 
     public function replies()
@@ -76,7 +71,7 @@ class User extends Authenticatable
 
     public function related($message):bool
     {
-        return ($this->id == $message->to) or ($this->id == $message->user_id);
+        return ($this->id == $message->receiver()->id) or ($this->id == $message->sender()->id);
     }
 
     public function isAdmin()

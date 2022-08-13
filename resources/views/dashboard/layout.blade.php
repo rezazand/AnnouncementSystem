@@ -50,8 +50,10 @@
         <li class="nav-item dropdown">
             <a title="اطلاعیه ها" class="nav-link" data-toggle="dropdown" href="#">
                 <i class="fa fa-bell-o"></i>
-                <span
-                    class="badge badge-warning navbar-badge">{{auth()->user()->received()->where('status',1)->count()}}</span>
+                <span class="badge badge-warning navbar-badge">
+                    {{auth()->user()->messages()->where('status',1)->count()}}
+                </span>
+
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-left">
                 <span class="dropdown-item dropdown-header">15 نوتیفیکیشن</span>

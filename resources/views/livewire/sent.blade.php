@@ -41,7 +41,7 @@
             @foreach($messages as $message)
                 <tr>
                     <td class="mailbox-name">
-                        {{$message->receiver->name}}
+                        {{$message->receiver()->name}}
                     </td>
 
                     <td class="mailbox-subject"><a

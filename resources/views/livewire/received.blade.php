@@ -41,7 +41,7 @@
             @foreach($messages as $message)
                 <tr @if($message->status) class="text-bold" @endif>
                     <td class="mailbox-name">
-                        <p class="d-inline">{{$message->user->name}}</p>
+                        <p class="d-inline">{{$message->sender()->name}}</p>
                         @if( $message->status)
                             <span class="float-left badge badge-pill badge-warning ">جدید</span>
                         @endif

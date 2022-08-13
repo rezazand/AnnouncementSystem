@@ -8,6 +8,7 @@ use App\Models\Permission;
 use App\Models\Reply;
 use App\Models\Role;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -62,38 +63,45 @@ class DatabaseSeeder extends Seeder
             'label' => 'حذف وظیفه'
         ]);
 
-       $role = Role::factory()->create(['label'=>'مدیر سایت']);
+        $role = Role::factory()->create(['label' => 'مدیر سایت']);
 
-       $role->permissions()->sync(Permission::all());
+        $role->permissions()->sync(Permission::all());
         DB::table('roles')->insert([
-            'label'=>'مدیر'
+            'label' => 'مدیر'
         ]);
         DB::table('departments')->insert([
-            'label'=>'فناوری'
+            'label' => 'فناوری'
         ]);
         DB::table('departments')->insert([
-            'label'=>'حراست'
+            'label' => 'حراست'
         ]);
         DB::table('departments')->insert([
-            'label'=>'مدیریت'
+            'label' => 'مدیریت'
         ]);
         DB::table('departments')->insert([
-            'label'=>'حسابداری'
+            'label' => 'حسابداری'
         ]);
 
         DB::table('users')->insert([
-            'name'=>'admin',
-            'email'=>'admin@gmail.com',
-            'password'=>bcrypt('admin'),
-            'role_id'=>1,
+            'name' => 'admin',
+            'email' => 'admin@gmail.com',
+            'password' => bcrypt('admin'),
+            'role_id' => 1,
             'remember_token' => Str::random(10),
             'email_verified_at' => now(),
-            'PNumber' => rand(9000000,1000000),
-            'department_id'=>1,
+            'PNumber' => rand(9000000, 1000000),
+            'department_id' => 1,
         ]);
-        User::factory(32)->create();
 
-        Message::factory(100)->create();
-        Reply::factory(150)->create();
+//        Message::factory(100)
+//            ->hasReplies(3)
+//            ->hasAttached(
+//            User::factory()->count(2),
+//            new Sequence(
+//                ['action','send'],
+//                ['action','receive']
+//            )
+//        )->create();
+
     }
 }

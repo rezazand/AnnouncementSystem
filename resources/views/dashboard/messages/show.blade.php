@@ -4,6 +4,24 @@
 @endsection
 @section('content')
     <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>مکاتبات</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb ">
+                            <li class="breadcrumb-item "><a href="{{route('dashboard')}}">خانه</a></li>
+                            <li class="breadcrumb-item active">مکاتبات</li>
+                            <li class="breadcrumb-item active">مشاهده ابلاغیه</li>
+                        </ol>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+        <div class="content">
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-md-10 mt-2">
@@ -18,15 +36,15 @@
                         <div class="card-body p-0">
                             <div class="mailbox-read-info">
                                 <h5
-                                    @if($message->user_id == auth()->id())
-                                        class="mb-1">گیرنده : {{$message->receiver->name}}
+                                    @if($message->sender()->id == auth()->id())
+                                        class="mb-1">گیرنده : {{$message->receiver()->name}}
                                     <span style="transform: scale(0.8)"
-                                          class="badge badge-info">{{$message->receiver->role->label}}
+                                          class="badge badge-info">{{$message->receiver()->role->label}}
                                     </span>
                                     @else
-                                        class="mb-1">فرستنده : {{$message->user->name}}
+                                        class="mb-1">فرستنده : {{$message->sender()->name}}
                                         <span style="transform: scale(0.8)"
-                                              class="badge badge-info">{{$message->user->role->label}}
+                                              class="badge badge-info">{{$message->sender()->role->label}}
                                     </span>
                                     @endif
                                     <span class="mailbox-read-time float-left">{{$message->created_at}}</span>
@@ -64,7 +82,7 @@
                             </div>
                         @endif
                         <!-- form -->
-                        @if($message->user->id == auth()->id())
+                        @if($message->receiver()->id == auth()->id())
                             <div class="card card-white  collapsed-card" style="margin-bottom: 0px!important;">
                                 <div class="card-header">
                                     <div class="">
@@ -76,7 +94,7 @@
                                     <!-- /.card-tools -->
                                 </div>
                                 <!-- /.card-header -->
-                                <div class="card-body" >
+                                <div class="card-body">
                                     @php $status = true @endphp
                                     @if($message->replies != null)
                                         <div class="table-responsive mailbox-messages">
@@ -87,25 +105,25 @@
                                                     <th>نتیجه</th>
                                                     <th>تاریخ ارجاع</th>
                                                 </tr>
-                                                    <tr >
-                                                        @foreach($message->replies as $reply)
-                                                            @if($reply->user_id == auth()->id())
-                                                                <td >
-                                                                    {{$reply->type}}
-                                                                </td>
-                                                                <td >
-                                                                    {{$reply->name}}
-                                                                </td>
-                                                                <td >
-                                                                    {{$reply->body}}
-                                                                </td>
+                                                <tr>
+                                                    @foreach($message->replies as $reply)
+                                                        @if($reply->user_id == auth()->id())
+                                                            <td>
+                                                                {{$reply->type}}
+                                                            </td>
+                                                            <td>
+                                                                {{$reply->name}}
+                                                            </td>
+                                                            <td>
+                                                                {{$reply->body}}
+                                                            </td>
                                                             <td>
                                                                 {{$reply->created_at}}
                                                             </td>
-                                                                @php $status = false @endphp
-                                                            @endif
-                                                        @endforeach
-                                                    </tr>
+                                                            @php $status = false @endphp
+                                                        @endif
+                                                    @endforeach
+                                                </tr>
                                             </table>
                                         </div>
                                     @endif
@@ -141,6 +159,7 @@
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </div>
 
