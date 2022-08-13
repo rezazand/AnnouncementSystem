@@ -8,6 +8,7 @@ use Livewire\Component;
 class SearchUsers extends Component
 {
     public $query;
+    public $target = 'admins';
 
     public function mount()
     {

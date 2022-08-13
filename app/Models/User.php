@@ -74,4 +74,15 @@ class User extends Authenticatable
     {
         return ($this->id == $message->to) or ($this->id == $message->user_id);
     }
+
+    public function isAdmin()
+    {
+        $result = $this->role->permissions->search(function($item,$key){
+            if($item->name == 'admin'){
+                return true;
+            }
+        });
+
+        return is_int($result);
+    }
 }
