@@ -17,7 +17,7 @@ class CreateMessageUserTable extends Migration
             $table->foreignId('message_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('action');
-            $table->primary(['message_id','user_id']);
+            $table->primary(['message_id','user_id','action']);
         });
     }
 

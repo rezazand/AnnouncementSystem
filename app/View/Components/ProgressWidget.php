@@ -25,22 +25,31 @@ class ProgressWidget extends Component
      */
     public function render()
     {
-        $departments = Department::all();
         $messages = auth()->user()->messages()->with('replies')->get();
-//
-//
-//        $array = [];
-//        foreach ($messages as $message) {
-//            $receiverDepartment = $message->receiver->department->label;
-//            if ($message->replies != null) {
-//                foreach ($message->replies as $reply) {
-//                    if ($reply->user->id == $message->user->id) {
-//                        $array[]=[$receiverDepartment,$message->user->id];
-//                    }
-//                }
-//            }
-//        }
-//        dd($departments);
-        return view('components.progress-widget', compact('departments'));
+
+        $base = [];
+        foreach ($messages as $message) {
+            $receiverDepartment = $message->receiver()->department->label;
+
+            if (!array_key_exists($receiverDepartment, $base)) {
+                $base[$receiverDepartment] = ['all' => 0, 'reply' => 0];
+            }
+            if ($message->replies()->first() != null) {
+                foreach ($message->replies as $reply) {
+                    $base[$receiverDepartment] = ['all' => $base[$receiverDepartment]['all']+1 ,'reply' => $base[$receiverDepartment]['reply'] + 1];
+                }
+            } else {
+                $base[$receiverDepartment] = ['all' => $base[$receiverDepartment]['all'] + 1,'reply' => $base[$receiverDepartment]['reply']];
+            }
+        }
+
+        $data=[];
+        foreach ($base as $key=>$value){
+            $data['labels'][] = $key;
+            $data['reply'][] = $value['reply'];
+            $data['all'][] = $value['all'];
+        }
+
+        return view('components.progress-widget', compact('data'));
     }
 }

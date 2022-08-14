@@ -16,13 +16,23 @@
             <div class="chart">
                 <canvas id="barChart" style="height:230px"></canvas>
             </div>
+            <div class="d-flex flex-row justify-content-end">
+                <span class="pl-2">
+                    <i class="fa fa-square" style="color: #00A65AFF"></i>
+                    ارجاع داده شده
+                  </span>
+                <span class="ml-2">
+                    <i class="fa fa-square " style="color: #D2D6DEFF"></i>
+                    همه
+                  </span>
+            </div>
         </div>
         <!-- /.card-body -->
     </div>
     <!-- /.card -->
     <script>
-        var areaChartData = {
-            labels: [@foreach($departments as $dep) '{{$dep->label}}', @endforeach],
+        let areaChartData = {
+            labels: [@foreach($data['labels'] as $label) '{{$label}}', @endforeach],
             datasets: [
                 {
                     label: 'Electronics',
@@ -32,7 +42,7 @@
                     pointStrokeColor: '#c1c7d1',
                     pointHighlightFill: '#fff',
                     pointHighlightStroke: 'rgba(220,220,220,1)',
-                    data: [65, 59, 80, 81]
+                    data: [@foreach($data['all'] as $item) '{{$item}}', @endforeach]
                 },
                 {
                     label: 'Digital Goods',
@@ -42,7 +52,7 @@
                     pointStrokeColor: 'rgba(60,141,188,1)',
                     pointHighlightFill: '#fff',
                     pointHighlightStroke: 'rgba(60,141,188,1)',
-                    data: [20, 48, 40, 19]
+                    data: [@foreach($data['reply'] as $reply) '{{$reply}}', @endforeach]
                 }
             ]
         }
