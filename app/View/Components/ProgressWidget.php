@@ -46,6 +46,9 @@ class ProgressWidget extends Component
         }
 
         $data=[];
+        $data['labels']=[];
+        $data['reply']=[];
+        $data['all']=[];
         foreach ($base as $key=>$value){
             $data['labels'][] = $key;
             $data['reply'][] = $value['reply'];
