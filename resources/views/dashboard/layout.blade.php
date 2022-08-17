@@ -172,6 +172,7 @@
 </aside>
 
 @yield('content')
+
 <footer class="main-footer">
     <strong>CopyRight &copy; 2022 <a href="https://iut.ac.ir">دانشگاه صنعتی اصفهان</a>.</strong>
 </footer>
@@ -230,7 +231,9 @@
     function invokeModal(name) {
         $(`#${name}`).modal('show');
     }
-
+    setTimeout(function(){
+        $('#success').remove();
+    }, 5000);
 </script>
 @yield('js')
 </body>

@@ -66,7 +66,7 @@ class MessageController extends Controller
             $attachment->message()->associate($message)->save();
 
         }
-        return redirect()->route('message.index');
+        return redirect()->route('message.index')->with('message','ابلاغیه مورد نظر شما ارسال شد.');
     }
 
     /**
@@ -115,6 +115,6 @@ class MessageController extends Controller
         $reply->save();
 
 
-        return redirect()->route('message.index');
+        return redirect()->route('message.index')->with('message','ارجاغ مورد نظر شما ثبت شد.');
     }
 }

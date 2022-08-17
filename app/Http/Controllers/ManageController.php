@@ -40,7 +40,7 @@ class ManageController extends Controller
             'role_id' => $input->role,
             'department_id' => $input->department
         ])->save();
-        return redirect()->to(URL::previous() . '#users');
+        return redirect()->to(URL::previous() . '#users')->with('message','کاربر مورد نظر با موفقیت ایجاد شد.');
     }
 
     public function editUser(Request $input)
@@ -64,7 +64,7 @@ class ManageController extends Controller
             'department_id' => $input->department
         ])->save();
 
-        return redirect()->to(URL::previous().'#users');
+        return redirect()->to(URL::previous().'#users')->with('message','کاربر مورد نظر با موفقیت ویرایش شد.');
 
     }
 
@@ -77,7 +77,7 @@ class ManageController extends Controller
         $role->forceFill(['label' => $input->label])->save();
         $role->permissions()->sync($input->permissions);
 
-        return redirect()->to(URL::previous() . '#roles');
+        return redirect()->to(URL::previous() . '#roles')->with('message','نقش جدید با موفقیت ایجاد شد.');
     }
     public function createDepartment(Request $input)
     {
@@ -87,25 +87,25 @@ class ManageController extends Controller
 
         $department = new Department();
         $department->forceFill(['label' => $input->label])->save();
-        return redirect()->to(URL::previous() . '#departments');
+        return redirect()->to(URL::previous() . '#departments')->with('message','زیرمجموعه جدید با موفقیت ایجاد شد.');
     }
 
     public function deleteUser(User $user)
     {
         $user->delete();
-        return redirect()->back();
+        return redirect()->back()->with('message','کاربر مورد نظر با موفقیت حذف شد.');
     }
 
     public function deleteRole(Role $role)
     {
         $role->delete();
-        return redirect()->to(URL::previous() . '#roles');
+        return redirect()->to(URL::previous() . '#roles')->with('message','نقش مورد نظر با موفقیت حذف شد.');
     }
 
     public function deleteDepartment(Department $department)
     {
         $department->delete();
-        return redirect()->to(URL::previous() . '#departments');
+        return redirect()->to(URL::previous() . '#departments')->with('message','زیرمجموعه مورد نظر با موفقیت حذف شد.');
     }
 
     public function editRole(Request $input)
@@ -123,7 +123,7 @@ class ManageController extends Controller
         }
         $role->permissions()->sync($input->permissions);
 
-        return redirect()->to(URL::previous() . '#roles');
+        return redirect()->to(URL::previous() . '#roles')->with('message','نقش مورد نظر با موفقیت حذف شد.');
     }
 
     public function editDepartment(Request $input)
@@ -138,7 +138,7 @@ class ManageController extends Controller
         if ($department->label != $input->label){
             $department->forceFill(['label'=>$input->label])->save();
         }
-        return redirect()->to(URL::previous() . '#departments');
+        return redirect()->to(URL::previous() . '#departments')->with('message','زیرمجموعه مورد نظر با موفقیت ویرایش شد.');
     }
 
 }

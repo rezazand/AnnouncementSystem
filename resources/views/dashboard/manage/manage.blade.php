@@ -2,9 +2,10 @@
 @section('head')
     <title>پنل کاربری | اضافه کردن کاربر</title>
     <style>
-        body{
-            padding-right:0px !important;
+        body {
+            padding-right: 0px !important;
         }
+
         .nav-link {
             transform: scale(0.9);
         }
@@ -353,6 +354,17 @@
                 </div>
             </div>
         </section>
+        @if(session('message'))
+            <div id="success" class="container " style="position: fixed;left:10px; bottom: 10px">
+                <div class="row justify-content-end px-3">
+                    <div class="col-5 alert alert-success alert-dismissible ">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h5><i class="icon fa fa-check"></i> توجه!</h5>
+                        {{session('message')}}
+                    </div>
+                </div>
+            </div>
+        @endif
     </div>
 @endsection
 @section('js')

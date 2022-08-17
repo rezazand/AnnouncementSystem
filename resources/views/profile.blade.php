@@ -123,9 +123,19 @@
                 </div><!-- /.container-fluid -->
             </section>
             <!-- /.content -->
+            @if(session('message'))
+                <div id="success" class="container " style="position: fixed;left:10px; bottom: 10px">
+                    <div class="row justify-content-end px-3">
+                        <div class="col-5 alert alert-success alert-dismissible ">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <h5><i class="icon fa fa-check"></i> توجه!</h5>
+                            {{session('message')}}
+                        </div>
+                    </div>
+                </div>
+            @endif
         </div>
         <!-- /.content-wrapper -->
-
     </div>
 @endsection
 @section('js')

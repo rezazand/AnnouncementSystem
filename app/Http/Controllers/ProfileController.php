@@ -40,6 +40,6 @@ class ProfileController extends Controller
 
         auth()->user()->update($update);
 
-        return back();
+        return back()->with('message','تغییرات شما با موفقیت ثبت شد.');
     }
 }

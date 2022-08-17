@@ -93,15 +93,5 @@ class DatabaseSeeder extends Seeder
             'department_id' => 1,
         ]);
 
-//        Message::factory(100)
-//            ->hasReplies(3)
-//            ->hasAttached(
-//            User::factory()->count(2),
-//            new Sequence(
-//                ['action','send'],
-//                ['action','receive']
-//            )
-//        )->create();
-
     }
 }
