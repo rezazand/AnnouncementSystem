@@ -29,9 +29,9 @@ class Message extends Model
         return $this->users()->where('action','send')->first();
     }
 
-    public function receiver()
+    public function receivers()
     {
-        return $this->users()->where('action','receive')->first();
+        return $this->users()->where('action','receive')->get();
     }
 
 }

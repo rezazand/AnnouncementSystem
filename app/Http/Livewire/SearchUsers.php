@@ -7,19 +7,26 @@ use Livewire\Component;
 
 class SearchUsers extends Component
 {
-    public $query;
     public $target = 'admins';
 
-    public function mount()
+    public function hydrate()
     {
-        $this->query='';
-
+        $this->emit('select2Hydrate');
     }
 
     public function render()
     {
-        $contacts = User::where('name','like','%'.$this->query.'%')->latest()->paginate(5);
+        $contacts = [];
+        if ($this->target == 'admins') {
+            foreach (User::latest()->get() as $user) {
+                if ($user->isAdmin()) {
+                    $contacts[] = $user;
+                }
+            }
+        } else {
+            $contacts = User::latest()->get();
+        }
 
-        return view('livewire.search-users',compact('contacts'));
+        return view('livewire.search-users', compact('contacts'));
     }
 }

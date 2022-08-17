@@ -71,7 +71,8 @@ class User extends Authenticatable
 
     public function related($message):bool
     {
-        return ($this->id == $message->receiver()->id) or ($this->id == $message->sender()->id);
+
+        return ( $message->receivers()->contains($this)) or ($this->id == $message->sender()->id);
     }
 
     public function isAdmin()

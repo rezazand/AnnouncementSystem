@@ -29,27 +29,30 @@ class ProgressWidget extends Component
 
         $base = [];
         foreach ($messages as $message) {
-            $receiverDepartment = $message->receiver()->department->label;
+            foreach ($message->receivers() as $receiver) {
+                $receiverDepartment = $receiver->department->label;
 
-            if (!array_key_exists($receiverDepartment, $base)) {
-                $base[$receiverDepartment] = ['all' => 0, 'reply' => 0];
-            }
-            if ($message->receiver()->name != auth()->user()->name){//todo
-                if ($message->replies()->first() != null) {
-                    foreach ($message->replies as $reply) {
-                        $base[$receiverDepartment] = ['all' => $base[$receiverDepartment]['all']+1 ,'reply' => $base[$receiverDepartment]['reply'] + 1];
+                if (!array_key_exists($receiverDepartment, $base)) {
+                    $base[$receiverDepartment] = ['all' => 0, 'reply' => 0];
+                }
+
+                if (!$message->receivers()->contains(auth()->user())) {
+                    if ($message->replies()->where('user_id',$receiver->id)->first() != null) {
+                        foreach ($message->replies as $reply) {
+                            $base[$receiverDepartment] = ['all' => $base[$receiverDepartment]['all'] + 1, 'reply' => $base[$receiverDepartment]['reply'] + 1];
+                        }
+                    } else {
+                        $base[$receiverDepartment] = ['all' => $base[$receiverDepartment]['all'] + 1, 'reply' => $base[$receiverDepartment]['reply']];
                     }
-                } else {
-                    $base[$receiverDepartment] = ['all' => $base[$receiverDepartment]['all'] + 1,'reply' => $base[$receiverDepartment]['reply']];
                 }
             }
         }
 
-        $data=[];
-        $data['labels']=[];
-        $data['reply']=[];
-        $data['all']=[];
-        foreach ($base as $key=>$value){
+        $data = [];
+        $data['labels'] = [];
+        $data['reply'] = [];
+        $data['all'] = [];
+        foreach ($base as $key => $value) {
             $data['labels'][] = $key;
             $data['reply'][] = $value['reply'];
             $data['all'][] = $value['all'];

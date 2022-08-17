@@ -43,7 +43,7 @@ class MessageController extends Controller
         $this->validate($validationInput, [
             'subject' => ['required', 'string', 'max:55'],
             'body' => ['required', 'string', 'min:5'],
-            'to' => ['required', 'string', 'exists:users,name'],
+            'to' => ['required', 'array', 'exists:users,id'],
             'attachment' => ['file', 'max:32000'],
         ]);
 
@@ -53,9 +53,11 @@ class MessageController extends Controller
             'body' => $request->body,
         ])->save();
 
-        $message->users()->attach(User::where('name', $request->to)->first()->id,['action'=>'receive']);
-        $message->users()->attach(auth()->id(),['action'=>'send']);
-        //TODO
+        $message->users()->attach(auth()->id(), ['action' => 'send']);
+        foreach ($request->input('to') as $user_id) {
+            $message->users()->attach($user_id, ['action' => 'receive']);
+        }
+
         if ($request->attachment != null) {
             $uploadedFile = $request->file('attachment');
             $folder = time() . (explode('.', $uploadedFile->getClientOriginalName())[0]);
@@ -64,9 +66,9 @@ class MessageController extends Controller
             $attachment = new Attachment();
             $attachment->filename = $filename;
             $attachment->message()->associate($message)->save();
-
         }
-        return redirect()->route('message.index')->with('message','ابلاغیه مورد نظر شما ارسال شد.');
+
+        return redirect()->route('message.index')->with('message', 'ابلاغیه مورد نظر شما ارسال شد.');
     }
 
     /**
@@ -97,7 +99,7 @@ class MessageController extends Controller
         return view('dashboard.messages.workflow', compact('message', 'replies'));
     }
 
-    public function reply(Request $request,Message $message)
+    public function reply(Request $request, Message $message)
     {
 
         $this->validate($request, [
@@ -115,6 +117,6 @@ class MessageController extends Controller
         $reply->save();
 
 
-        return redirect()->route('message.index')->with('message','ارجاغ مورد نظر شما ثبت شد.');
+        return redirect()->route('message.index')->with('message', 'ارجاغ مورد نظر شما ثبت شد.');
     }
 }

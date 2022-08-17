@@ -33,7 +33,7 @@
         <table class="table table-hover hover text-center text-sm">
             <tbody>
             <tr>
-                <th>گیرنده</th>
+                <th>دریافت کننده</th>
                 <th>عنوان ابلاغیه</th>
                 <th>تاریخ</th>
                 <th>گردش کار</th>
@@ -41,7 +41,16 @@
             @foreach($messages as $message)
                 <tr>
                     <td class="mailbox-name">
-                        {{$message->receiver()->name}}
+
+                        @foreach($message->receivers() as $receiver)
+                            <span>,{{$receiver->name}}</span>
+                            @if($loop->last)
+                                <span>{{$receiver->name}}</span>
+                            @else
+                                <span>{{$receiver->name}},</span>
+                            @endif
+                        @endforeach
+
                     </td>
 
                     <td class="mailbox-subject"><a
