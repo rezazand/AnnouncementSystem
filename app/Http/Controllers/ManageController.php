@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use function PHPUnit\Framework\isNull;
 
 
@@ -28,7 +29,7 @@ class ManageController extends Controller
                 'string',
             ],
             'role' => ['required', 'string'],
-            'personalNumber' => ['required', 'integer'],
+            'personalNumber' => ['required', 'integer','unique:users,PNumber'],
             'password' => ['required', 'min:8']
         ])->validateWithBag('manageError');
 
@@ -71,7 +72,7 @@ class ManageController extends Controller
     public function createRole(Request $input)
     {
         Validator::make($input->all(), [
-            'label' => ['required', 'string'],
+            'label' => ['required', 'string','unique:roles,label'],
         ])->validateWithBag('manageError');
         $role = new Role();
         $role->forceFill(['label' => $input->label])->save();
@@ -82,12 +83,12 @@ class ManageController extends Controller
     public function createDepartment(Request $input)
     {
         Validator::make($input->all(), [
-            'label' => ['required', 'string'],
+            'label' => ['required', 'string','unique:departments,label'],
         ])->validateWithBag('manageError');
 
         $department = new Department();
         $department->forceFill(['label' => $input->label])->save();
-        return redirect()->to(URL::previous() . '#departments')->with('message','زیرمجموعه جدید با موفقیت ایجاد شد.');
+        return redirect()->to(URL::previous() . '#departments')->with('message','مجموعه جدید با موفقیت ایجاد شد.');
     }
 
     public function deleteUser(User $user)
@@ -105,7 +106,7 @@ class ManageController extends Controller
     public function deleteDepartment(Department $department)
     {
         $department->delete();
-        return redirect()->to(URL::previous() . '#departments')->with('message','زیرمجموعه مورد نظر با موفقیت حذف شد.');
+        return redirect()->to(URL::previous() . '#departments')->with('message','مجموعه مورد نظر با موفقیت حذف شد.');
     }
 
     public function editRole(Request $input)
@@ -138,7 +139,7 @@ class ManageController extends Controller
         if ($department->label != $input->label){
             $department->forceFill(['label'=>$input->label])->save();
         }
-        return redirect()->to(URL::previous() . '#departments')->with('message','زیرمجموعه مورد نظر با موفقیت ویرایش شد.');
+        return redirect()->to(URL::previous() . '#departments')->with('message','مجموعه مورد نظر با موفقیت ویرایش شد.');
     }
 
 }

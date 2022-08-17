@@ -115,11 +115,6 @@
                 </div>
             </div><!-- /.container-fluid -->
         </section>
-        <ul>
-            @foreach($errors->manageError->all() as $error)
-                <li>{{$error}}</li>
-            @endforeach
-        </ul>
         <section class="content">
             <div class="container-fluid">
                 <div class="row justify-content-center">
@@ -176,7 +171,7 @@
                                                         <span class="fa fa-lock px-3 input-group-text"></span>
                                                     </div>
                                                 </div>
-                                                <label for="department">نام زیرمجموعه</label>
+                                                <label for="department">نام مجموعه</label>
                                                 <div class="input-group mb-3">
                                                     <select id="department" name="department" class="form-control">
                                                         @foreach(\App\Models\Department::all() as $d)
@@ -221,7 +216,7 @@
                                  data-target="#createNewDepartment">
                                 <div class="inner">
 
-                                    <p>ایجاد زیرمجموعه </p>
+                                    <p>ایجاد مجموعه </p>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-person-stalker"></i>
@@ -236,10 +231,10 @@
                                     <div class="modal-body">
                                         <form action="{{route('create-department')}}" method="POST">
                                             @csrf
-                                            <label class="label" for="name">نام زیرمجموعه</label>
+                                            <label class="label" for="name">نام مجموعه</label>
                                             <div class="input-group mb-4">
                                                 <input id="name" type="text" class="form-control"
-                                                       placeholder="نام زیرمجموعه"
+                                                       placeholder="نام مجموعه"
                                                        name="label">
                                             </div>
                                             <div class="row justify-content-center "
@@ -247,7 +242,7 @@
                                                 <!-- /.col -->
                                                 <div class="col-10 mt-2">
                                                     <button type="submit"
-                                                            class="btn btn-primary btn-block btn-flat">{{__('ایجاد زیرمجموعه')}}</button>
+                                                            class="btn btn-primary btn-block btn-flat">{{__('ایجاد مجموعه')}}</button>
                                                 </div>
                                                 <!-- /.col -->
                                             </div>
@@ -336,7 +331,7 @@
                             <li class="nav-item bg-white shadow-sm"><a class="nav-link" href="#roles" data-toggle="tab">وظایف</a>
                             </li>
                             <li class="nav-item bg-white shadow-sm"><a class="nav-link" href="#departments"
-                                                                       data-toggle="tab">زیرمجموعه
+                                                                       data-toggle="tab">مجموعه
                                     ها</a></li>
                         </ul>
                         <div class="tab-content">
@@ -365,6 +360,18 @@
                 </div>
             </div>
         @endif
+        @foreach($errors->manageError->all() as $error)
+            <div id="success" class="container " style="position: fixed;left:10px; bottom: 10px">
+                <div class="row justify-content-end px-3">
+                    <div class="col-5 alert alert-danger alert-dismissible ">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h5><i class="icon fa fa-ban"></i> توجه!</h5>
+                        {{$error}}
+                    </div>
+                </div>
+            </div>
+        @endforeach
+
     </div>
 @endsection
 @section('js')
