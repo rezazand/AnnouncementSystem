@@ -34,12 +34,14 @@ class ProgressWidget extends Component
             if (!array_key_exists($receiverDepartment, $base)) {
                 $base[$receiverDepartment] = ['all' => 0, 'reply' => 0];
             }
-            if ($message->replies()->first() != null) {
-                foreach ($message->replies as $reply) {
-                    $base[$receiverDepartment] = ['all' => $base[$receiverDepartment]['all']+1 ,'reply' => $base[$receiverDepartment]['reply'] + 1];
+            if ($message->receiver()->name != auth()->user()->name){//todo
+                if ($message->replies()->first() != null) {
+                    foreach ($message->replies as $reply) {
+                        $base[$receiverDepartment] = ['all' => $base[$receiverDepartment]['all']+1 ,'reply' => $base[$receiverDepartment]['reply'] + 1];
+                    }
+                } else {
+                    $base[$receiverDepartment] = ['all' => $base[$receiverDepartment]['all'] + 1,'reply' => $base[$receiverDepartment]['reply']];
                 }
-            } else {
-                $base[$receiverDepartment] = ['all' => $base[$receiverDepartment]['all'] + 1,'reply' => $base[$receiverDepartment]['reply']];
             }
         }
 
