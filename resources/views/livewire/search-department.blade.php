@@ -1,4 +1,4 @@
-<div>
+<div xmlns:wire="http://www.w3.org/1999/xhtml">
     <input type="text" wire:model="query" class="form-control mb-1" placeholder="جستوجو">
     <div class="card">
         <!-- /.card-header -->
@@ -27,6 +27,7 @@
                     </tr>
                 @endforeach
             </table>
+            {{$departments->links('paginate')}}
         </div>
         <!-- /.card-body -->
     </div>

@@ -1,4 +1,4 @@
-<div>
+<div xmlns:wire="http://www.w3.org/1999/xhtml">
     <input type="text" wire:model="query" class="form-control mb-1" placeholder="جستوجو">
     <div class="card">
         <!-- /.card-header -->
@@ -7,6 +7,7 @@
                 <tr>
                     <th>شماره پرسنلی</th>
                     <th>نام</th>
+                    <th>نام مجموعه</th>
                     <th>وظیفه</th>
                     <th><i class="ion ion-gear-b"></i></th>
                 </tr>
@@ -14,6 +15,7 @@
                     <tr>
                         <td>{{$user->PNumber}}</td>
                         <td>{{$user->name}}</td>
+                        <td>{{$user->department->label}}</td>
                         <td>{{$user->role->label}}</td>
                         <td>
                             @can('edit-user')
@@ -31,6 +33,7 @@
                     </tr>
                 @endforeach
             </table>
+            {{$users->links('paginate')}}
         </div>
         <!-- /.card-body -->
     </div>

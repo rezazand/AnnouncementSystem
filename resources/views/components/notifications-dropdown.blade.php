@@ -30,6 +30,7 @@
             <span class="dropdown-item text-center">
                 <i class="fa fa-bell-slash-o"></i>  اعلان جدیدی وجود ندارد
                 {{--            <span class="float-left text-muted text-sm">2 روز</span>--}}
+                {{--TODO--}}
             </span>
         @else
             <div class="dropdown-divider"></div>

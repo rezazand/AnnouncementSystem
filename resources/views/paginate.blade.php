@@ -1,5 +1,6 @@
 @if ($paginator->lastPage() > 1)
-    {{($paginator->currentPage()-1)*10}}-{{$paginator->currentPage()*10}}/{{$paginator->lastPage()*10}}
+    {{($paginator->currentPage()-1)*$paginator->perPage()}}-{{$paginator->currentPage()*$paginator->perPage()> $paginator->total() ? $paginator->total():$paginator->currentPage()*$paginator->perPage()}}/{{$paginator->total()}}
+    &nbsp;&nbsp;
     <div class="btn-group mb-1">
         <a class="btn btn-default btn-sm {{ ($paginator->currentPage() == 1) ? ' disabled' : '' }}"
            href="{{$paginator->currentPage() == 1 ? '#':$paginator->url($paginator->currentPage()-1)}}"><i
