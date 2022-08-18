@@ -1,6 +1,6 @@
 <div class="form-group row" xmlns:wire="http://www.w3.org/1999/xhtml">
     <div class="form-group col-10 pt-4">
-        <select name="to[]" class="form-control select2" multiple="multiple" data-placeholder="یک استان انتخاب کنید"
+        <select name="to[]" class="form-control select2" multiple="multiple" data-placeholder="ارسال به :"
                 style="width: 100%;text-align: right">
             @foreach($contacts as $contact)
                 <option value="{{$contact->id}}">{{$contact->department->label}}: {{$contact->name}}&nbsp;&nbsp;&nbsp;<{{$contact->role->label}}></option>
@@ -54,10 +54,6 @@
                 }
             });
 
-            $("input[list='search']").change(function () {
-                $("input[name='subject']").focus();
-            })
-
             $(function () {
                 ClassicEditor
                     .create(document.querySelector('#compose-textarea'))
@@ -74,6 +70,5 @@
             tree.classList.add('menu-open');
             tree.children[0].style.background = '#007bff';
         </script>
-
     @endsection
 </div>

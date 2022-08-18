@@ -47,31 +47,7 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav mr-auto">
         <!-- Notifications Dropdown Menu -->
-        <li class="nav-item dropdown">
-            <a title="اطلاعیه ها" class="nav-link" data-toggle="dropdown" href="#">
-                <i class="fa fa-bell-o"></i>
-                <span class="badge badge-warning navbar-badge">
-                    {{auth()->user()->messages()->where('status',1)->count()}}
-                </span>
-
-            </a>
-            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-left">
-                <span class="dropdown-item dropdown-header">15 نوتیفیکیشن</span>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                    <i class="fa fa-envelope ml-2"></i> 4 پیام جدید
-                    <span class="float-left text-muted text-sm">3 دقیقه</span>
-                </a>
-
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                    <i class="fa fa-file ml-2"></i> 3 گزارش جدید
-                    <span class="float-left text-muted text-sm">2 روز</span>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="{{route('message.index')}}" class="dropdown-item dropdown-footer">مشاهده همه نوتیفیکیشن</a>
-            </div>
-        </li>
+        <x-notifications-dropdown/>
 
         <li class="nav-item">
             <a title="خروج از سایت" class="nav-link" href="{{route('logout')}}"

@@ -17,7 +17,7 @@ class CreateMessagesTable extends Migration
             $table->id('id', true);
             $table->string('subject');
             $table->text("body");
-            $table->integer('status')->default(0);
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }

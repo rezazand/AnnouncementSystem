@@ -43,7 +43,6 @@
                     <td class="mailbox-name">
 
                         @foreach($message->receivers() as $receiver)
-                            <span>,{{$receiver->name}}</span>
                             @if($loop->last)
                                 <span>{{$receiver->name}}</span>
                             @else
@@ -88,9 +87,10 @@
                                 @foreach($replies as $reply)
                                     <tr>
                                         <td>
-                                            {{$reply->user->name}}<span
-                                                class="badge badge-info"
-                                                style="transform: scale(0.8)">{{$reply->user->role->label}}</span>
+                                            {{$reply->user->name}}
+                                            <span class="badge badge-info" style="transform: scale(0.8)">
+                                                {{$reply->user->role->label}}
+                                            </span>
                                         </td>
                                         <td>{{$reply->name}}</td>
                                         <td>{{$reply->type}}</td>

@@ -20,6 +20,7 @@ class CreateRepliesTable extends Migration
             $table->string('name');
             $table->string('type');
             $table->text('body');
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }
