@@ -19,12 +19,12 @@ class SearchUsers extends Component
         $contacts = [];
         if ($this->target == 'admins') {
             foreach (User::latest()->get() as $user) {
-                if ($user->isAdmin()) {
+                if ($user->isAdmin() and $user->id != auth()->id()) {
                     $contacts[] = $user;
                 }
             }
         } else {
-            $contacts = User::latest()->get();
+            $contacts = User::where('id','!=',auth()->id())->latest()->get();
         }
 
         return view('livewire.search-users', compact('contacts'));
