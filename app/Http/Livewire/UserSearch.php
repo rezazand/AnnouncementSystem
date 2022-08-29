@@ -14,16 +14,20 @@ class UserSearch extends Component
 
     public function render()
     {
-        $users = User::where('name', 'like', '%' . $this->query . '%')->latest()->paginate(5);
-        if ($this->check){
+        if (auth()->user()->can('access-all-departments')) {
+            $users = User::where('name', 'like', '%' . $this->query . '%')->latest()->paginate(5);
+        } else {
+            $users = User::where('department_id', auth()->user()->department_id)->where('name', 'like', '%' . $this->query . '%')->latest()->paginate(5);
+        }
+        if ($this->check) {
             $userE = User::find($this->check);
             $departments = Department::all();
             $roles = Role::all();
-        }else{
+        } else {
             $userE = null;
             $departments = null;
             $roles = null;
         }
-        return view('livewire.user-search',compact('users','userE','departments','roles'));
+        return view('livewire.user-search', compact('users', 'userE', 'departments', 'roles'));
     }
 }

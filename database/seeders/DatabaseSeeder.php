@@ -31,6 +31,10 @@ class DatabaseSeeder extends Seeder
             'label' => 'منوی مدیریت'
         ]);
         DB::table('permissions')->insert([
+            'name' => 'access-all-departments',
+            'label' => 'دسترسی به همه مجموعه ها'
+        ]);
+        DB::table('permissions')->insert([
             'name' => 'create-user',
             'label' => 'ایجاد کاربر'
         ]);

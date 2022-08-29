@@ -174,9 +174,15 @@
                                                 <label for="department">نام مجموعه</label>
                                                 <div class="input-group mb-3">
                                                     <select id="department" name="department" class="form-control">
-                                                        @foreach(\App\Models\Department::all() as $d)
-                                                            <option value="{{$d->id}}">{{$d->label}}</option>
-                                                        @endforeach
+                                                        @can('access-all-departments')
+                                                            @foreach(\App\Models\Department::all() as $d)
+                                                                <option value="{{$d->id}}">{{$d->label}}</option>
+                                                            @endforeach
+                                                        @else
+                                                            <option value="{{auth()->user()->department_id}}">
+                                                                {{\App\Models\Department::find(auth()->user()->department_id)->label}}
+                                                            </option>
+                                                        @endcan
                                                     </select>
                                                     <div class="input-group-append">
                                                         <span class="fa fa-users input-group-text"></span>
