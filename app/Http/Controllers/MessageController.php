@@ -29,6 +29,8 @@ class MessageController extends Controller
      */
     public function create(): View
     {
+        $this->authorize('create-message');
+
         return view('dashboard.messages.create');
     }
 
