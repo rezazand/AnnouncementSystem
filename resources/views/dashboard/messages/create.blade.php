@@ -16,7 +16,7 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb ">
                             <li class="breadcrumb-item "><a href="{{route('dashboard')}}">خانه</a></li>
-                            <li class="breadcrumb-item active">مکاتبات</li>
+                            <li class="breadcrumb-item "><a href="{{route('message.index')}}">مکاتبات</a></li>
                             <li class="breadcrumb-item active">ایجاد</li>
                         </ol>
                     </div>

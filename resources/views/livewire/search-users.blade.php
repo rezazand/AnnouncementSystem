@@ -64,11 +64,6 @@
                         console.error(error)
                     })
             })
-            let element = document.getElementById('write');
-            let tree = document.getElementById('messages');
-            element.classList.add('active');
-            tree.classList.add('menu-open');
-            tree.children[0].style.background = '#007bff';
         </script>
     @endsection
 </div>

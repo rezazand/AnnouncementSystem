@@ -90,7 +90,9 @@
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
                     <li class="nav-item">
-                        <a href="{{route('dashboard')}}" class="nav-link" id="dash">
+                        <a href="{{route('dashboard')}}"
+                           class="nav-link @if(\Illuminate\Support\Facades\Route::currentRouteName() == 'dashboard') active @endif"
+                           id="dash">
                             <i class="nav-icon fa fa-dashboard"></i>
                             <p>
                                 داشبورد
@@ -99,7 +101,8 @@
                     </li>
                     @can('management')
                         <li class="nav-item" id="manage">
-                            <a href="{{route('manage')}}" class="nav-link">
+                            <a href="{{route('manage')}}"
+                               class="nav-link @if(\Illuminate\Support\Facades\Route::currentRouteName() == 'manage') active @endif">
                                 <i class="nav-icon fa fa-superpowers" aria-hidden="true"></i>
                                 <p>
                                     مدیریت
@@ -108,8 +111,14 @@
                         </li>
                     @endcan
                     @can('create-message')
-                        <li class="nav-item has-treeview" id="messages">
-                            <a href="#" class="nav-link">
+                        <li class="nav-item has-treeview
+                        @if(\Illuminate\Support\Facades\Route::currentRouteName() == 'message.index' or  \Illuminate\Support\Facades\Route::currentRouteName() =='message.create') menu-open @endif
+                        "
+                            id="messages">
+                            <a href="#"
+                               class="nav-link
+                               @if(\Illuminate\Support\Facades\Route::currentRouteName() == 'message.index' or \Illuminate\Support\Facades\Route::currentRouteName() =="message.create") active @endif
+                               ">
                                 <i class="nav-icon fa fa-envelope-o"></i>
                                 <p>
                                     مکاتبات
@@ -118,13 +127,17 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="{{route('message.index')}}" class="nav-link" id="inbox">
+                                    <a href="{{route('message.index')}}"
+                                       class="nav-link @if(\Illuminate\Support\Facades\Route::currentRouteName() == 'message.index') active @endif"
+                                       id="inbox">
                                         <i class="fa fa-circle-o nav-icon"></i>
                                         <p>صندوق</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{route('message.create')}}" class="nav-link" id="write">
+                                    <a href="{{route('message.create')}}"
+                                       class="nav-link @if(\Illuminate\Support\Facades\Route::currentRouteName() == "message.create") active @endif"
+                                       id="create">
                                         <i class="fa fa-circle-o nav-icon"></i>
                                         <p>ایجاد</p>
                                     </a>
@@ -133,7 +146,7 @@
                         </li>
                     @else
                         <li class="nav-item">
-                            <a href="{{route('message.index')}}" class="nav-link" >
+                            <a href="{{route('message.index')}}" class="nav-link">
                                 <i class="nav-icon fa fa-envelope-o"></i>
                                 <p>
                                     مکاتبات
