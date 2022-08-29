@@ -97,35 +97,46 @@
                             </p>
                         </a>
                     </li>
-                    <li class="nav-item has-treeview" id="messages">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fa fa-envelope-o"></i>
-                            <p>
-                                مکاتبات
-                                <i class="fa fa-angle-left right"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{route('message.index')}}" class="nav-link" id="inbox">
-                                    <i class="fa fa-circle-o nav-icon"></i>
-                                    <p>صندوق</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{route('message.create')}}" class="nav-link" id="write">
-                                    <i class="fa fa-circle-o nav-icon"></i>
-                                    <p>ایجاد</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    @can('admin')
+                    @can('management')
                         <li class="nav-item" id="manage">
-                            <a href="{{route('manage')}}" class="nav-link" id="calender">
+                            <a href="{{route('manage')}}" class="nav-link">
                                 <i class="nav-icon fa fa-superpowers" aria-hidden="true"></i>
                                 <p>
                                     مدیریت
+                                </p>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('create-message')
+                        <li class="nav-item has-treeview" id="messages">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fa fa-envelope-o"></i>
+                                <p>
+                                    مکاتبات
+                                    <i class="fa fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{route('message.index')}}" class="nav-link" id="inbox">
+                                        <i class="fa fa-circle-o nav-icon"></i>
+                                        <p>صندوق</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('message.create')}}" class="nav-link" id="write">
+                                        <i class="fa fa-circle-o nav-icon"></i>
+                                        <p>ایجاد</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    @else
+                        <li class="nav-item">
+                            <a href="{{route('message.index')}}" class="nav-link" >
+                                <i class="nav-icon fa fa-envelope-o"></i>
+                                <p>
+                                    مکاتبات
                                 </p>
                             </a>
                         </li>

@@ -23,8 +23,12 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         DB::table('permissions')->insert([
-            'name' => 'admin',
-            'label' => 'مدیریت'
+            'name' => 'create-message',
+            'label' => 'ایجاد ابلاغیه'
+        ]);
+        DB::table('permissions')->insert([
+            'name' => 'management',
+            'label' => 'منوی مدیریت'
         ]);
         DB::table('permissions')->insert([
             'name' => 'create-user',

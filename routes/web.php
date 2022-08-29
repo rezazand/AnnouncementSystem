@@ -35,7 +35,7 @@ Route::middleware('auth')->group(function (){
 
     //---------------------------Manage-----------------------//
 
-    Route::middleware('can:admin')->group(function (){
+    Route::middleware('can:management')->group(function (){
         Route::get('manage',[\App\Http\Controllers\ManageController::class,'index'])->name('manage');
 
         Route::post('manage/user/create',[\App\Http\Controllers\ManageController::class,'createUser'])->name('create-user')->can('create-user');

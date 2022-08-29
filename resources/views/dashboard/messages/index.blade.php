@@ -58,9 +58,11 @@
                     <!-- /.col -->
                     <div class="col-md-3">
 
-                        <a href="{{route('message.create')}}" class="btn btn-primary btn-block mb-3">ایجاد ابلاغیه
-                            جدید
-                        </a>
+                        @can('create-message')
+                            <a href="{{route('message.create')}}" class="btn btn-primary btn-block mb-3">ایجاد ابلاغیه
+                                جدید
+                            </a>
+                        @endcan
 
                         <div class="card">
                             <div class="card-header">
