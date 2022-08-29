@@ -78,7 +78,7 @@ class User extends Authenticatable
     public function isAdmin()
     {
         $result = $this->role->permissions->search(function($item,$key){
-            if($item->name == 'admin'){
+            if($item->name == 'management'){
                 return true;
             }
         });
