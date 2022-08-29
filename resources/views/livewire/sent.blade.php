@@ -27,7 +27,7 @@
 
                     <td class="mailbox-subject"><a
                             href="{{route('message.show',$message->id)}}">{{$message->subject}}</a></td>
-                    <td class="mailbox-date">{{$message->created_at}}</td>
+                    <td class="mailbox-date">{{jdate($message->created_at)->format('%A, %d %B %Y')}}</td>
                     <td class="mailbox-date">
                         <label for="w-{{$message->id}}"><i
                                 class="fa fa-eye"></i></label>
@@ -67,11 +67,11 @@
                                         </td>
                                         <td>{{$reply->name}}</td>
                                         <td>{{$reply->type}}</td>
-                                        <td>{{$message->created_at}}</td>
+                                        <td>{{jdate($message->created_at)->format('%d %B %Y')}}</td>
                                         <td>
                                             {{$reply->body}}
                                         </td>
-                                        <td>{{$reply->created_at}}</td>
+                                        <td>{{jdate($reply->created_at)->format('%d %B %Y')}}</td>
                                     </tr>
                                 @endforeach
                             @endif

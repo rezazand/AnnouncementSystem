@@ -23,7 +23,7 @@
 
                     <td class="mailbox-subject"><a
                             href="{{route('message.show',$message->id)}}">{{$message->subject}}</a></td>
-                    <td class="mailbox-date">{{$message->created_at}}</td>
+                    <td class="mailbox-date">{{jdate($message->created_at)->format('%A, %d %B %Y')}}</td>
                 </tr>
             @endforeach
             </tbody>

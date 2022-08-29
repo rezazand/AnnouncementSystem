@@ -119,6 +119,6 @@ class MessageController extends Controller
         $reply->save();
 
 
-        return redirect()->route('message.index')->with('message', 'ارجاغ مورد نظر شما ثبت شد.');
+        return redirect()->route('message.index')->with('message', 'ارجاع مورد نظر شما ثبت شد.');
     }
 }

@@ -35,7 +35,7 @@
                             <!-- /.card-header -->
                             <div class="card-body p-0">
                                 <div class="mailbox-read-info">
-                                    <span class="mailbox-read-time float-left">{{$message->created_at}}</span>
+                                    <span class="mailbox-read-time float-left">{{jdate($message->created_at)->format('%A, %d %B %Y')}}</span>
 
                                 @if($message->sender()->id == auth()->id())
                                         <h5 class="mb-1"> دریافت کننده ها :</h5>
@@ -123,7 +123,7 @@
                                                                     {{$reply->body}}
                                                                 </td>
                                                                 <td>
-                                                                    {{$reply->created_at}}
+                                                                    {{jdate($reply->created_at)->format('%A, %d %B %Y')}}
                                                                 </td>
                                                                 @php $status = false @endphp
                                                             @endif
