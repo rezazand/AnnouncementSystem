@@ -35,18 +35,19 @@
                             <!-- /.card-header -->
                             <div class="card-body p-0">
                                 <div class="mailbox-read-info">
-                                    <span class="mailbox-read-time float-left">{{jdate($message->created_at)->format('%A, %d %B %Y')}}</span>
+                                    <span
+                                        class="mailbox-read-time float-left">{{jdate($message->created_at)->format('%A, %d %B %Y')}}</span>
 
-                                @if($message->sender()->id == auth()->id())
+                                    @if($message->sender()->id == auth()->id())
                                         <h5 class="mb-1"> دریافت کننده ها :</h5>
 
-                                           @foreach($message->receivers() as $receiver)
-                                               <li >{{$receiver->name}} &nbsp;
-                                                   <span class="badge badge-info" style="transform: scale(0.8)">
-                                                {{$receiver->role->label}}
+                                        @foreach($message->receivers() as $receiver)
+                                            <span>{{$receiver->name}} &nbsp;
+                                                <span class="badge badge-info" style="transform: scale(0.8)">
+                                                    {{$receiver->role->label}}
+                                                </span>
                                             </span>
-                                               </li>
-                                           @endforeach
+                                        @endforeach
                                     @else
                                         <h5 class="mb-1">فرستنده : {{$message->sender()->name}}
                                             <span style="transform: scale(0.8)" class="badge badge-info">
