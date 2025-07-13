@@ -6,6 +6,7 @@ use App\Models\Permission;
 use App\Models\User;
 use Illuminate\Contracts\Auth\Access\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Schema;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -27,11 +28,13 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-           foreach($this->getPermission() as $permission){
-               $gate->define($permission->name,function ($user)use($permission){
-                   return $user->hasRole($permission->roles);
-               });
-           }
+        if (Schema::hasTable('permissions')) {
+            foreach ($this->getPermission() as $permission) {
+                $gate->define($permission->name, function ($user) use ($permission) {
+                    return $user->hasRole($permission->roles);
+                });
+            }
+        }
 
         $gate->define('related',function (User $user,$message){
             return $user->related($message);
