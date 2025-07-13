@@ -24,9 +24,11 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
-        DB::statement(
-            'ALTER TABLE users ADD FULLTEXT fulltext_index(name, email)'
-        );
+        if (Schema::getConnection()->getDriverName() === 'mysql') {
+            DB::statement(
+                'ALTER TABLE users ADD FULLTEXT fulltext_index(name, email)'
+            );
+        }
     }
     /**
      * Reverse the migrations.
